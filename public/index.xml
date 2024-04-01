@@ -9,12 +9,18 @@
     <lastBuildDate>Mon, 01 Apr 2024 11:58:05 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>First</title>
+      <title>Personal Page Build</title>
       <link>http://localhost:1313/posts/first/</link>
       <pubDate>Mon, 01 Apr 2024 11:58:05 +0800</pubDate>
       <guid>http://localhost:1313/posts/first/</guid>
-      <description>First Blog Asdasd.
-1 $ git init 次啊是第一 阿斯顿撒 </description>
+      <description>环境介绍 建站工具：Hugo + Github + Netlify + Aliyun + CloudFlare
+电脑环境：MacOS Sonoma (14.3.1)
+Hugo: Hugo
+Netlify: Netlify
+HUGO 安装 准备工作，安装：
+Git Go Dart Sass 接下来开始正式安装hugo, 使用homebrew进行安装
+1 brew install hugo 安装好后查看版本信息
+1 hugo version 创建一个 site 1 2 3 4 5 6 hugo new site Bob_L # 创建了一个名为 Bob_L 的 site cd quickstart # 进入 site git init # 初始化 git git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke # 加入你的主题 echo &amp;#34;theme = &amp;#39;ananke&amp;#39;&amp;#34; &amp;gt;&amp;gt; hugo.</description>
     </item>
     <item>
       <title>About</title>
