@@ -1,3 +1,4 @@
+theme: ["PaperMod"]
 params:
   profileMode:
     enabled: true
