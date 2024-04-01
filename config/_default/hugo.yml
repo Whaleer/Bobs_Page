@@ -53,6 +53,8 @@ params:
 
   comments: true
 
+  enableEmoji: true
+
 outputs:
   home:
     - HTML
