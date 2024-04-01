@@ -9,15 +9,11 @@ draft = false
 
 Asdasd.
 
-Asdasd bn
+```bash
+$ git init
+```
 
-Hi
 
-
-
-asd
-
-asdas
 
 - 次啊是第一
 - 阿斯顿撒

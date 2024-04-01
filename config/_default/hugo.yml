@@ -1,21 +1,93 @@
 theme: ["PaperMod"]
+baseURL: 'https://bobliu.cc/'
+languageCode: 'en-us'
+title: 'Bob_Ls home'
+theme: 'PaperMod'
+
 params:
   profileMode:
     enabled: true
-    title: "Bob_L's home" # optional default will be site title
-    subtitle: "This is subtitle"
-    imageUrl: "<image link>" # optional
-    imageTitle: "<title of image as alt>" # optional
-    imageWidth: 120 # custom size
-    imageHeight: 120 # custom size
+    title: "Bob_L" # optional default will be site title
+    subtitle: "diving.."
+    imageUrl: "https://pic3.zhimg.com/v2-d4f016a486813cf40fbf1b510b04c9ca_b.jpg" # optional
+    imageTitle: "Bob_L" # optional
+    imageWidth: 100 # custom size
+    imageHeight: 100 # custom size
     buttons:
       - name: Archive
-        url: "/archive"
+        url: "/archives"
       - name: Github
-        url: "https://github.com/"
+        url: "https://github.com/Whaleer/"
 
   socialIcons: # optional
-    - name: "<platform>"
-      url: "<link>"
-    - name: "<platform 2>"
-      url: "<link2>"
+    - name: "Github"
+      url: "https://github.com/Whaleer/"
+    - name: "Discord"
+      url: "https://discord.com/"
+    - name: "AppleMusic"
+      url: "https://music.apple.com/cn/home?l=zh-Hans-CN"
+
+  cover:
+    image: "https://w.wallhaven.cc/full/l8/wallhaven-l8vp7y.jpg"
+    # can also paste direct link from external site
+    # ex. https://i.ibb.co/K0HVPBd/paper-mod-profilemode.png
+    alt: "post"
+    caption: "<text>"
+    relative: false # To use relative path for cover image, used in hugo Page-bundles
+
+  ShowShareButtons: false
+
+  # show Table of Contents (Toc) on blog post
+  ShowToc: true
+
+  ShowBreadCrumbs: true
+
+  # editPost:
+  #   URL: "https://github.com/<path_to_repo>/content"
+  #   Text: "Suggest Changes" # edit text
+  #   appendFilePath: true # to append file path to Edit link
+
+  ShowPostNavLinks: true
+
+  ShowCodeCopyButtons: true
+
+  comments: true
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON # necessary for search
+
+# menus:
+#   footer:
+#   - name: Terms
+#     pageRef: /terms
+#     weight: 10
+#   - name: Privacy
+#     pageRef: /privacy
+#     weight: 20
+
+# menu:
+#   main:
+#     - identifier: categories
+#       name: Categories
+#       url: /categories/
+#       weight: 10
+#     - identifier: example
+#       name: Whaleer.git
+#       url: https://github.com/Whaleer
+#       weight: 30
+
+markup:
+  highlight:
+    # anchorLineNos: true
+    codeFences: true
+    guessSyntax: true
+    lineNos: true
+    # noClasses: false
+    style: monokai
+
+# automatically menu
+sectionPagesMenu: main
+

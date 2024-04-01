@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Posts on Bobliuliu</title>
-    <link>https://bobliu.cc/posts/</link>
-    <description>Recent content in Posts on Bobliuliu</description>
+    <title>Posts on Bob_Ls home</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on Bob_Ls home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 01 Apr 2024 11:58:05 +0800</lastBuildDate>
-    <atom:link href="https://bobliu.cc/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>First</title>
-      <link>https://bobliu.cc/posts/first/</link>
+      <link>http://localhost:1313/posts/first/</link>
       <pubDate>Mon, 01 Apr 2024 11:58:05 +0800</pubDate>
-      <guid>https://bobliu.cc/posts/first/</guid>
+      <guid>http://localhost:1313/posts/first/</guid>
       <description>First Blog Asdasd.
-Asdasd bn
-Hi
-asd
-asdas
-次啊是第一 阿斯顿撒 </description>
+1 $ git init 次啊是第一 阿斯顿撒 </description>
     </item>
   </channel>
 </rss>
