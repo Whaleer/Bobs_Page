@@ -10,9 +10,9 @@
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Personal Page Build</title>
-      <link>http://localhost:1313/posts/first/</link>
+      <link>http://localhost:1313/posts/post_01/first/</link>
       <pubDate>Mon, 01 Apr 2024 11:58:05 +0800</pubDate>
-      <guid>http://localhost:1313/posts/first/</guid>
+      <guid>http://localhost:1313/posts/post_01/first/</guid>
       <description>环境介绍 建站工具：Hugo + Github + Netlify + Aliyun + CloudFlare
 电脑环境：MacOS Sonoma (14.3.1)
 Hugo: Hugo

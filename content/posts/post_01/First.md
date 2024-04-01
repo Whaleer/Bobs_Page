@@ -89,7 +89,4 @@ git push -u origin main
 3. 连接 github
 4. 选择刚刚上传的博客项目
 
-<img src="../../assets/kmHCvwYS46TBz87.png" alt="image-2024040131756402 PM.png" style="zoom:33%;" />
-
-
-
+<img src="../../../assets/image-2024040131756402%E2%80%AFPM-1960585.png" alt="image-2024040131756402 PM.png" style="zoom:33%;" />
