@@ -70,7 +70,7 @@ hugo server -D
 
 ## Github 文件托管
 
-首先你需要在 github 中创建一个 repository，然后再执行下载的操作
+首先你需要在 github 中创建一个 repository，然后再执行下面的操作
 
 ```
 git add .
@@ -89,4 +89,36 @@ git push -u origin main
 3. 连接 github
 4. 选择刚刚上传的博客项目
 
-![](https://s2.loli.net/2024/04/01/kmHCvwYS46TBz87.png)
+<img src="https://s2.loli.net/2024/04/01/kmHCvwYS46TBz87.png" alt="image-2024040131756402 PM.png" style="zoom:33%;" />
+
+### 配置域名
+
+在阿里云购买域名后，进行设置
+
+![20240401170239.png](https://s2.loli.net/2024/04/01/SfKVahjkJYcT3ye.png)
+
+设置好了之后会在 Netlify 有对应的显示
+
+![20240401170601.png](https://s2.loli.net/2024/04/01/LHPbi47fTr1CIld.png)
+
+现在就可以使用自己的域名访问个人网站了🎉🎉
+
+------
+
+## CloudFlare 加速
+
+Netlify 虽然已经提供了 CDN 加速，但在使用过程中发现国内访问还是比较慢，Cloudflare 相对于国内的七牛云、阿里云等云服务商的 CDN 速度会慢一些，但是它有免费版本，而且最重要的是域名不用备案。
+
+1. 注册
+2. 输入自己的域名
+3. 选择免费套餐
+4. 添加DNS记录
+5. 更改名称服务器 （在阿里云的DNS配置界面修改），将域名服务器从阿里云的默认服务器改成clouldflare的服务器
+
+------
+
+### 参考：
+
+- https://blog.cuijiacai.com/blog-building/
+- https://gohugo.io/installation/macos/
+
