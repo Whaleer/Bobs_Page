@@ -16,8 +16,12 @@ params:
     buttons:
       - name: Archive
         url: "/archives"
+      - name: Categories
+        url: "/Categories"
       - name: Github
         url: "https://github.com/Whaleer/"
+      
+
 
   socialIcons: # optional
     - name: "Github"
@@ -27,14 +31,14 @@ params:
     - name: "AppleMusic"
       url: "https://music.apple.com/cn/home?l=zh-Hans-CN"
 
-  cover:
-    image: "https://w.wallhaven.cc/full/l8/wallhaven-l8vp7y.jpg"
-    # can also paste direct link from external site
-    # ex. https://i.ibb.co/K0HVPBd/paper-mod-profilemode.png
-    alt: "post"
-    caption: "<text>"
-    relative: false # To use relative path for cover image, used in hugo Page-bundles
+  assets:
+    disableHLJS: true
 
+  ShowAllPagesInArchive: true
+  
+  # DateFormat: "2006-01-02" # 值是 Golang 中的时间格式化字符串，它的意义是固定的
+  ShowFullTextinRSS: true
+  
   ShowShareButtons: false
 
   # show Table of Contents (Toc) on blog post
@@ -57,6 +61,11 @@ params:
 
   enableEmoji: true
 
+taxonomies:
+    category: categories
+    tag: tags
+
+
 outputs:
   home:
     - HTML
@@ -72,29 +81,39 @@ outputs:
 #     pageRef: /privacy
 #     weight: 20
 
-# menu:
-#   main:
-#     - identifier: categories
-#       name: Categories
-#       url: /categories/
-#       weight: 10
-#     - identifier: example
-#       name: Whaleer.git
-#       url: https://github.com/Whaleer
-#       weight: 30
+menu:
+  main:
+    - identifier: categories
+      name: Categories
+      url: /categories/
+      weight: 10
+    # - identifier: example
+    #   name: Whaleer.git
+    #   url: https://github.com/Whaleer
+    #   weight: 30
 
 markup:
   highlight:
-    # anchorLineNos: true
+    anchorLineNos: false
     codeFences: true
     guessSyntax: true
-    lineNos: true
-    # noClasses: false
-    style: monokai
+    hl_Lines: ""
+    lineAnchors: ""
+    lineNoStart: 1   #行从几开始
+    lineNos: true   #是否显示行列
+    lineNumbersInTable: true
+    noClasses: true
+    style: monokai   #代码样式
+
+
 
 # automatically menu
 sectionPagesMenu: main
 
-# taxonomies:
-#   category: categories
-#   tag: tags
+
+# markup:
+#   tableOfContents:
+#     endLevel: 3
+#     ordered: false
+#     startLevel: 2
+

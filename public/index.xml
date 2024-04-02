@@ -6,8 +6,15 @@
     <description>Recent content on Bob_Ls home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Apr 2024 11:58:05 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 02 Apr 2024 23:24:45 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Test</title>
+      <link>http://localhost:1313/posts/tags/test/</link>
+      <pubDate>Tue, 02 Apr 2024 23:24:45 +0800</pubDate>
+      <guid>http://localhost:1313/posts/tags/test/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Personal Page Build</title>
       <link>http://localhost:1313/posts/post_01/personal-page-build/</link>
@@ -21,6 +28,134 @@ HUGO 安装 准备工作，安装：
 Git Go Dart Sass 接下来开始正式安装hugo, 使用homebrew进行安装
 1 brew install hugo 安装好后查看版本信息
 1 hugo version 创建一个 site 1 2 3 4 5 6 hugo new site Bob_L # 创建了一个名为 Bob_L 的 site cd quickstart # 进入 site git init # 初始化 git git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke # 加入你的主题 echo &amp;#34;theme = &amp;#39;ananke&amp;#39;&amp;#34; &amp;gt;&amp;gt; hugo.</description>
+      <content:encoded><![CDATA[<h2 id="环境介绍">环境介绍</h2>
+<p><strong>建站工具：Hugo +  Github + Netlify + Aliyun + CloudFlare</strong></p>
+<p><strong>电脑环境：MacOS Sonoma (14.3.1)</strong></p>
+<p><strong>Hugo:</strong> <a href="https://gohugo.io/">Hugo</a></p>
+<p><strong>Netlify:</strong> <a href="https://www.netlify.com/">Netlify</a></p>
+<hr>
+<h2 id="hugo-安装">HUGO 安装</h2>
+<p><strong>准备工作，安装：</strong></p>
+<ul>
+<li>Git</li>
+<li>Go</li>
+<li>Dart Sass</li>
+</ul>
+<p>接下来开始正式安装hugo, 使用homebrew进行安装</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>brew install hugo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装好后查看版本信息</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="创建一个-site">创建一个 site</h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site Bob_L <span style="color:#75715e"># 创建了一个名为 Bob_L 的 site</span>
+</span></span><span style="display:flex;"><span>cd quickstart <span style="color:#75715e"># 进入 site</span>
+</span></span><span style="display:flex;"><span>git init <span style="color:#75715e"># 初始化 git</span>
+</span></span><span style="display:flex;"><span>git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke <span style="color:#75715e"># 加入你的主题</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;theme = &#39;ananke&#39;&#34;</span> &gt;&gt; hugo.toml <span style="color:#75715e"># 修改成你的主题</span>
+</span></span><span style="display:flex;"><span>hugo server
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>hugo server</code> 之后，通过查看终端的 url 就可以看到你的网页了</li>
+<li>注意：这里是使用 <code>submodule</code> ，因为如果使用 <code>clone</code>，可能会出错</li>
+</ul>
+<h3 id="加入-content">加入 content</h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new content posts/my-first-post.md
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Hugo 会在 <code>content/posts</code> 目录下创建你的 content，最开始在 <a href="https://gohugo.io/content-management/front-matter/">front matter</a> 中 <code>draft</code> 的值是 <code>true</code> . 默认状态下， Hugo 并不会在建站过程中发布 draft 内容</p>
+<p>保存这个文件，然后在 Hugo’s development server 中查看你的 site，运行下面的<strong>任意一个指令</strong>来包含 draft 内容</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server --buildDrafts
+</span></span><span style="display:flex;"><span>hugo server -D
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="github-文件托管">Github 文件托管</h2>
+<p>首先你需要在 github 中创建一个 repository，然后再执行下面的操作</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m &#34;my blog first commit&#34;
+</span></span><span style="display:flex;"><span>git remote add origin &#34;远端github仓库地址&#34;
+</span></span><span style="display:flex;"><span>git branch -M main
+</span></span><span style="display:flex;"><span>git push -u origin main
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="netlify-建站">Netlify 建站</h2>
+<ol>
+<li>注册账号</li>
+<li>新建站点</li>
+<li>连接 github</li>
+<li>选择刚刚上传的博客项目</li>
+</ol>
+<!-- raw HTML omitted -->
+<h3 id="配置域名">配置域名</h3>
+<p>在阿里云购买域名后，进行设置</p>
+<p><img loading="lazy" src="https://s2.loli.net/2024/04/01/SfKVahjkJYcT3ye.png" alt="20240401170239.png"  />
+</p>
+<p>设置好了之后会在 Netlify 有对应的显示</p>
+<p><img loading="lazy" src="https://s2.loli.net/2024/04/01/LHPbi47fTr1CIld.png" alt="20240401170601.png"  />
+</p>
+<p>现在就可以使用自己的域名访问个人网站了🎉🎉</p>
+<hr>
+<h2 id="cloudflare-加速">CloudFlare 加速</h2>
+<p>Netlify 虽然已经提供了 CDN 加速，但在使用过程中发现国内访问还是比较慢，Cloudflare 相对于国内的七牛云、阿里云等云服务商的 CDN 速度会慢一些，但是它有免费版本，而且最重要的是域名不用备案。</p>
+<ol>
+<li>注册</li>
+<li>输入自己的域名</li>
+<li>选择免费套餐</li>
+<li>添加DNS记录</li>
+<li>更改名称服务器 （在阿里云的DNS配置界面修改），将域名服务器从阿里云的默认服务器改成clouldflare的服务器</li>
+</ol>
+<hr>
+<h3 id="参考">参考：</h3>
+<ul>
+<li><a href="https://blog.cuijiacai.com/blog-building/">https://blog.cuijiacai.com/blog-building/</a></li>
+<li><a href="https://gohugo.io/installation/macos/">https://gohugo.io/installation/macos/</a></li>
+</ul>
+]]></content:encoded>
     </item>
     <item>
       <title>About</title>
@@ -28,6 +163,8 @@ Git Go Dart Sass 接下来开始正式安装hugo, 使用homebrew进行安装
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/about/</guid>
       <description>Hi, I am Bob L, a student at NWNU.</description>
+      <content:encoded><![CDATA[<p>Hi, I am Bob L, a student at NWNU.</p>
+]]></content:encoded>
     </item>
   </channel>
 </rss>
