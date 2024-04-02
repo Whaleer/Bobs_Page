@@ -49,6 +49,8 @@ params:
 
   ShowPostNavLinks: true
 
+  ShowShareButtons: false
+
   ShowCodeCopyButtons: true
 
   comments: true
@@ -93,3 +95,6 @@ markup:
 # automatically menu
 sectionPagesMenu: main
 
+# taxonomies:
+#   category: categories
+#   tag: tags
