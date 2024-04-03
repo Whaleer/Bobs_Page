@@ -102,8 +102,8 @@ markup:
     lineNoStart: 1   #行从几开始
     lineNos: true   #是否显示行列
     lineNumbersInTable: true
-    noClasses: true
-    style: monokai   #代码样式
+    noClasses: false
+    style: catppuccin-frappe   #代码样式
 
 
 
