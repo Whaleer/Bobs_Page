@@ -9,7 +9,7 @@ params:
     enabled: true
     title: "Bob_L" # optional default will be site title
     subtitle: "diving.."
-    imageUrl: "https://s2.loli.net/2024/04/06/tQDVWzXAa84KMgs.png" # optional
+    imageUrl: "https://s2.loli.net/2024/04/17/gjw1hnUEHxM6z23.jpg" # optional
     imageTitle: "Bob_L" # optional
     imageWidth: 100 # custom size
     imageHeight: 100 # custom size
