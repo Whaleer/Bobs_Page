@@ -76,7 +76,7 @@ hugo server -D
 
 首先你需要在 github 中创建一个 repository，然后再执行下面的操作
 
-```
+```bash
 git add .
 git commit -m "my blog first commit"
 git remote add origin "远端github仓库地址"
