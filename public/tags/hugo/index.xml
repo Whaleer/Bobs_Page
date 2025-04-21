@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Bob L Blogs</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on Bob L Blogs</description>
+    <title>Hugo on Bob L Blogs</title>
+    <link>http://localhost:1313/tags/hugo/</link>
+    <description>Recent content in Hugo on Bob L Blogs</description>
     <generator>Hugo -- 0.146.6</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 21 Apr 2025 14:09:03 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hugo_learning</title>
       <link>http://localhost:1313/posts/post_02/hugo_learning/</link>
@@ -403,27 +403,6 @@
 <ul>
 <li><a href="https://blog.cuijiacai.com/blog-building/">https://blog.cuijiacai.com/blog-building/</a></li>
 <li><a href="https://gohugo.io/installation/macos/">https://gohugo.io/installation/macos/</a></li>
-</ul>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>About</title>
-      <link>http://localhost:1313/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/about/</guid>
-      <description>&lt;h4 id=&#34;hi-im-bob-liu&#34;&gt;Hi!😸 I&amp;rsquo;m Bob Liu&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;I earned my undergraduate degree from CQUPT and am currently pursuing a master’s degree at NWNU.&lt;/li&gt;
-&lt;li&gt;My postgraduate projects dealt with computer vision, medical image processing, medical image segmentation.&lt;/li&gt;
-&lt;li&gt;I’m currently deepening my expertise in computer vision, embedded systems, and backend development.&lt;/li&gt;
-&lt;li&gt;How to reach me: &lt;a href=&#34;mailto:bingxiliu35@gmail.com&#34;&gt;bingxiliu35@gmail.com&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-      <content:encoded><![CDATA[<h4 id="hi-im-bob-liu">Hi!😸 I&rsquo;m Bob Liu</h4>
-<ul>
-<li>I earned my undergraduate degree from CQUPT and am currently pursuing a master’s degree at NWNU.</li>
-<li>My postgraduate projects dealt with computer vision, medical image processing, medical image segmentation.</li>
-<li>I’m currently deepening my expertise in computer vision, embedded systems, and backend development.</li>
-<li>How to reach me: <a href="mailto:bingxiliu35@gmail.com">bingxiliu35@gmail.com</a></li>
 </ul>
 ]]></content:encoded>
     </item>

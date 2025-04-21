@@ -1,38 +1,46 @@
-theme: ["PaperMod"]
 baseURL: 'https://bobliu.cc/'
 languageCode: 'en-us'
-title: 'Bob_Ls home'
+title: 'Bob L Blogs'
 theme: 'PaperMod'
 
 params:
   profileMode:
     enabled: true
-    title: "Bob_L" # optional default will be site title
-    subtitle: "diving.."
-    imageUrl: "https://s2.loli.net/2024/04/17/gjw1hnUEHxM6z23.jpg" # optional
+    title: "Bob L" # optional default will be site title
+    subtitle: "diving..."
+    imageUrl: "https://s2.loli.net/2025/04/21/Bd2qcSlTQUYfDRa.png" # optional
     imageTitle: "Bob_L" # optional
     imageWidth: 100 # custom size
     imageHeight: 100 # custom size
     buttons:
       - name: Archive
         url: "/archives"
-      - name: Categories
-        url: "/Categories"
+      - name: Tags
+        url: "/tags"
       - name: Github
         url: "https://github.com/Whaleer/"
       
+  defaultTheme: auto # 自动跟随系统
 
 
   socialIcons: # optional
     - name: "Github"
       url: "https://github.com/Whaleer/"
-    - name: "Discord"
-      url: "https://discord.com/"
-    - name: "AppleMusic"
-      url: "https://music.apple.com/cn/home?l=zh-Hans-CN"
+    - name: "bilibili"
+      url: "https://space.bilibili.com/11530473"
+    - name: "QQ"
+      url: "https://qm.qq.com/q/aV0GnjPzQA"
+
+
 
   assets:
-    disableHLJS: true
+    # disableHLJS: true
+    favicon: "/Users/bingxil/Bob_L_Hugo/static/favicon.ico"
+    favicon16x16: "/Users/bingxil/Bob_L_Hugo/static/favicon-16x16.png"
+    favicon32x32: "/Users/bingxil/Bob_L_Hugo/static/favicon-32x32.png"
+    apple_touch_icon: "/Users/bingxil/Bob_L_Hugo/static/apple-touch-icon.png"
+    # safari_pinned_tab: "/Users/bingxil/Bob_L_Hugo/static/safari-pinned-tab.svg"
+
 
   ShowAllPagesInArchive: true
   
@@ -40,10 +48,8 @@ params:
   ShowFullTextinRSS: true
   
   ShowShareButtons: false
-
   # show Table of Contents (Toc) on blog post
   ShowToc: true
-
   ShowBreadCrumbs: true
 
   # editPost:
@@ -52,13 +58,8 @@ params:
   #   appendFilePath: true # to append file path to Edit link
 
   ShowPostNavLinks: true
-
-  ShowShareButtons: false
-
   ShowCodeCopyButtons: true
-
   comments: true
-
   enableEmoji: true
 
 taxonomies:
@@ -66,31 +67,31 @@ taxonomies:
     tag: tags
 
 
-outputs:
-  home:
-    - HTML
-    - RSS
-    - JSON # necessary for search
 
-# menus:
-#   footer:
-#   - name: Terms
-#     pageRef: /terms
-#     weight: 10
-#   - name: Privacy
-#     pageRef: /privacy
-#     weight: 20
+# automatically menu
+# sectionPagesMenu: main
 
 menu:
   main:
-    - identifier: categories
-      name: Categories
-      url: /categories/
+    - identifier: about
+      name: About
+      url: /about/
       weight: 10
-    # - identifier: example
-    #   name: Whaleer.git
-    #   url: https://github.com/Whaleer
-    #   weight: 30
+
+    - identifier: tags
+      name: Tags
+      url: tags/
+      weight: 20
+
+    - identifier: Archive
+      name: Archive
+      url: /archives/
+      weight: 30
+
+    - identifier: search
+      name: Search
+      url: /search/
+      weight: 40
 
 markup:
   highlight:
@@ -105,15 +106,4 @@ markup:
     noClasses: false
     style: catppuccin-frappe   #代码样式
 
-
-
-# automatically menu
-sectionPagesMenu: main
-
-
-# markup:
-#   tableOfContents:
-#     endLevel: 3
-#     ordered: false
-#     startLevel: 2
 

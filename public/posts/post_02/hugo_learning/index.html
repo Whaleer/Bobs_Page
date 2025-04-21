@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Hugo_learning | Bob L Blogs</title>
+<meta name="keywords" content="Hugo">
+<meta name="description" content="个人主题配置
+概述
+这里选用的是 hugo-PaperMod
+PaperMod 有三种不同的模式（3 Modes）:
+
+Regular Mode.
+Home-Info Mode.
+Profile Mode.
+
+主题安装
+安装详细内容可以参考 hugo-PaperMod/wiki/Installation
+
+[!WARNING]
+Make sure you install Hugo &gt;= v0.112.4
+
+主题的安装路径：/Users/bingxil/Bob_L_Hugo/themes
+PaperMode 的安装后的路径：/Users/bingxil/Bob_L_Hugo/themes/PaperMod
+
+如果之前安装了，要重新删除的话，执行如下命令
+
+
+1
+2
+3
+
+
+git submodule deinit -f themes/PaperMod 
+git rm -f themes/PaperMod
+rm -rf git/modules/themes/PaperMod
+
+
+安装命令:
+
+
+1
+2
+
+
+git submodule add --depth=1 https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+git submodule update --init --recursive # needed when you reclone your repo (submodules may not get cloned automatically)
+
+
+最后，还需要在 hugo.yml add:">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/posts/post_02/hugo_learning/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.f49d66caae9ea0fd43f21f29e71a8d3e284517ed770f2aa86fa012953ad3c9ef.css" integrity="sha256-9J1myq6eoP1D8h8p5xqNPihFF&#43;13Dyqob6ASlTrTye8=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/Users/bingxil/Bob_L_Hugo/static/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/Users/bingxil/Bob_L_Hugo/static/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/Users/bingxil/Bob_L_Hugo/static/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/Users/bingxil/Bob_L_Hugo/static/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/post_02/hugo_learning/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Bob L Blogs (Alt + H)">Bob L Blogs</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Hugo_learning
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+    </h1>
+    <div class="post-meta"><span title='2025-04-21 14:09:03 +0800 CST'>April 21, 2025</span>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e4%b8%aa%e4%ba%ba%e4%b8%bb%e9%a2%98%e9%85%8d%e7%bd%ae" aria-label="个人主题配置">个人主题配置</a><ul>
+                        
+                <li>
+                    <a href="#%e6%a6%82%e8%bf%b0" aria-label="概述">概述</a></li>
+                <li>
+                    <a href="#%e4%b8%bb%e9%a2%98%e5%ae%89%e8%a3%85" aria-label="主题安装">主题安装</a><ul>
+                        
+                <li>
+                    <a href="#%e6%8e%a5%e4%b8%8b%e6%9d%a5---%e8%87%aa%e5%ae%9a%e4%b9%89-papermod-%e4%bb%a5%e7%ac%a6%e5%90%88%e8%87%aa%e5%b7%b1%e7%9a%84%e5%81%8f%e5%a5%bd" aria-label="接下来 - 自定义 PaperMod 以符合自己的偏好">接下来 - 自定义 PaperMod 以符合自己的偏好</a><ul>
+                        
+                <li>
+                    <a href="#archives-layout" aria-label="Archives Layout：">Archives Layout：</a></li>
+                <li>
+                    <a href="#%e8%ae%be%e7%bd%ae%e4%b8%ba-profile-mode" aria-label="设置为 Profile Mode.">设置为 Profile Mode.</a></li></ul>
+                </li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#01-cli" aria-label="01: CLI">01: CLI</a><ul>
+                        
+                <li>
+                    <a href="#hugo-new" aria-label="hugo new">hugo new</a></li></ul>
+                </li>
+                <li>
+                    <a href="#02-content-management" aria-label="02: Content management">02: Content management</a><ul>
+                        
+                <li>
+                    <a href="#archetypes%e5%8e%9f%e5%9e%8b" aria-label="Archetypes(原型)">Archetypes(原型)</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="个人主题配置">个人主题配置<a hidden class="anchor" aria-hidden="true" href="#个人主题配置">#</a></h2>
+<h3 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h3>
+<p>这里选用的是 <a href="https://github.com/adityatelange/hugo-PaperMod">hugo-PaperMod</a></p>
+<p>PaperMod 有三种不同的模式（3 Modes）:</p>
+<ul>
+<li><a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Features#regular-mode-default-mode">Regular Mode.</a></li>
+<li><a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Features#home-info-mode">Home-Info Mode.</a></li>
+<li><a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Features#profile-mode">Profile Mode.</a></li>
+</ul>
+<h3 id="主题安装">主题安装<a hidden class="anchor" aria-hidden="true" href="#主题安装">#</a></h3>
+<p>安装详细内容可以参考 <a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Installation">hugo-PaperMod/wiki/Installation</a></p>
+<blockquote>
+<p>[!WARNING]</p>
+<p>Make sure you install <strong>Hugo &gt;= v0.112.4</strong></p></blockquote>
+<ul>
+<li>主题的安装路径：<code>/Users/bingxil/Bob_L_Hugo/themes</code></li>
+<li>PaperMode 的安装后的路径：<code>/Users/bingxil/Bob_L_Hugo/themes/PaperMod</code></li>
+</ul>
+<p>如果之前安装了，要重新删除的话，执行如下命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git submodule deinit -f themes/PaperMod 
+</span></span><span class="line"><span class="cl">git rm -f themes/PaperMod
+</span></span><span class="line"><span class="cl">rm -rf git/modules/themes/PaperMod
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装命令:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git submodule add --depth<span class="o">=</span><span class="m">1</span> https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+</span></span><span class="line"><span class="cl">git submodule update --init --recursive <span class="c1"># needed when you reclone your repo (submodules may not get cloned automatically)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后，还需要在 <code>hugo.yml</code> add:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">theme</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;PaperMod&#34;</span><span class="p">]</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="接下来---自定义-papermod-以符合自己的偏好">接下来 - 自定义 PaperMod 以符合自己的偏好<a hidden class="anchor" aria-hidden="true" href="#接下来---自定义-papermod-以符合自己的偏好">#</a></h4>
+<ul>
+<li>
+<p>在第一次设置后，网站将是空白的</p>
+</li>
+<li>
+<p>可以查看此网站的源代码 - <a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite">https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite</a></p>
+</li>
+</ul>
+<h5 id="archives-layout">Archives Layout：<a hidden class="anchor" aria-hidden="true" href="#archives-layout">#</a></h5>
+<p><strong>把你所有文章按年份‑月份归档展示，生成 /archives/（或你自定义的路径）这一整页年表式清单</strong></p>
+<p>在 content 中创建一个 <code>archive.md</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── config.yml
+</span></span><span class="line"><span class="cl">├── content/
+</span></span><span class="line"><span class="cl">│   ├── archives.md   &lt;--- Create archive.md here
+</span></span><span class="line"><span class="cl">│   └── posts/
+</span></span><span class="line"><span class="cl">├── static/
+</span></span><span class="line"><span class="cl">└── themes/
+</span></span><span class="line"><span class="cl">    └── PaperMod/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 <code>archive.md</code> 加入如下内容就行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">title: &#34;Archive&#34;
+</span></span><span class="line"><span class="cl">layout: &#34;archives&#34;
+</span></span><span class="line"><span class="cl">url: &#34;/archives/&#34;
+</span></span><span class="line"><span class="cl">summary: archives
+</span></span><span class="line"><span class="cl">---
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请注意：归档布局不支持多语言月份翻译</p>
+<h5 id="设置为-profile-mode">设置为 <a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Features#profile-mode">Profile Mode.</a><a hidden class="anchor" aria-hidden="true" href="#设置为-profile-mode">#</a></h5>
+<p>只需要在 <code>hugo.yml</code> 中加入如下内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">profileMode</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Bob L&#34;</span><span class="w"> </span><span class="c"># optional default will be site title</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">subtitle</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;diving..&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">imageUrl</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://s2.loli.net/2025/04/21/Bd2qcSlTQUYfDRa.png&#34;</span><span class="w"> </span><span class="c"># optional</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">imageTitle</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Bob_L&#34;</span><span class="w"> </span><span class="c"># optional</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">imageWidth</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="c"># custom size</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">imageHeight</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="c"># custom size</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">buttons</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Archive</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/archives&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Categories</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/Categories&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Github</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://github.com/Whaleer/&#34;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里的内容是我的主题中的内容</p>
+<h2 id="01-cli">01: CLI<a hidden class="anchor" aria-hidden="true" href="#01-cli">#</a></h2>
+<h3 id="hugo-new">hugo new<a hidden class="anchor" aria-hidden="true" href="#hugo-new">#</a></h3>
+<h2 id="02-content-management">02: Content management<a hidden class="anchor" aria-hidden="true" href="#02-content-management">#</a></h2>
+<h3 id="archetypes原型">Archetypes(原型)<a hidden class="anchor" aria-hidden="true" href="#archetypes原型">#</a></h3>
+<blockquote>
+<p><strong>An archetype is a template for new content.</strong></p></blockquote>
+<p>archetype 相当于是一个内容的模板</p>
+<p><code>hugo new content</code> 命令会在 content 目录中创建一个新文件，并使用 archetype 作为模板</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/hugo/">Hugo</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://localhost:1313/posts/post_01/personal-page-build/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Personal Page Build</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/">Bob L Blogs</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

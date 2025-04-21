@@ -5,7 +5,7 @@ date = 2024-04-01T11:58:05+08:00
 
 draft = false
 
-categories = ["Hugo"]
+Tags = ["Hugo"]
 
 +++
 
