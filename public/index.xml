@@ -2,219 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Bob L Blogs</title>
-    <link>http://localhost:1313/</link>
+    <link>https://bobliu.cc/</link>
     <description>Recent content on Bob L Blogs</description>
     <generator>Hugo -- 0.146.6</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Apr 2025 14:09:03 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Hugo_learning</title>
-      <link>http://localhost:1313/posts/post_02/hugo_learning/</link>
-      <pubDate>Mon, 21 Apr 2025 14:09:03 +0800</pubDate>
-      <guid>http://localhost:1313/posts/post_02/hugo_learning/</guid>
-      <description>&lt;h2 id=&#34;个人主题配置&#34;&gt;个人主题配置&lt;/h2&gt;
-&lt;h3 id=&#34;概述&#34;&gt;概述&lt;/h3&gt;
-&lt;p&gt;这里选用的是 &lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod&#34;&gt;hugo-PaperMod&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;PaperMod 有三种不同的模式（3 Modes）:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod/wiki/Features#regular-mode-default-mode&#34;&gt;Regular Mode.&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod/wiki/Features#home-info-mode&#34;&gt;Home-Info Mode.&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod/wiki/Features#profile-mode&#34;&gt;Profile Mode.&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;主题安装&#34;&gt;主题安装&lt;/h3&gt;
-&lt;p&gt;安装详细内容可以参考 &lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod/wiki/Installation&#34;&gt;hugo-PaperMod/wiki/Installation&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;[!WARNING]&lt;/p&gt;
-&lt;p&gt;Make sure you install &lt;strong&gt;Hugo &amp;gt;= v0.112.4&lt;/strong&gt;&lt;/p&gt;&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;主题的安装路径：&lt;code&gt;/Users/bingxil/Bob_L_Hugo/themes&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;PaperMode 的安装后的路径：&lt;code&gt;/Users/bingxil/Bob_L_Hugo/themes/PaperMod&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;如果之前安装了，要重新删除的话，执行如下命令&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git submodule deinit -f themes/PaperMod 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git rm -f themes/PaperMod
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rm -rf git/modules/themes/PaperMod
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;安装命令:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git submodule add --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git submodule update --init --recursive &lt;span class=&#34;c1&#34;&gt;# needed when you reclone your repo (submodules may not get cloned automatically)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;最后，还需要在 &lt;code&gt;hugo.yml&lt;/code&gt; add:&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<h2 id="个人主题配置">个人主题配置</h2>
-<h3 id="概述">概述</h3>
-<p>这里选用的是 <a href="https://github.com/adityatelange/hugo-PaperMod">hugo-PaperMod</a></p>
-<p>PaperMod 有三种不同的模式（3 Modes）:</p>
-<ul>
-<li><a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Features#regular-mode-default-mode">Regular Mode.</a></li>
-<li><a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Features#home-info-mode">Home-Info Mode.</a></li>
-<li><a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Features#profile-mode">Profile Mode.</a></li>
-</ul>
-<h3 id="主题安装">主题安装</h3>
-<p>安装详细内容可以参考 <a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Installation">hugo-PaperMod/wiki/Installation</a></p>
-<blockquote>
-<p>[!WARNING]</p>
-<p>Make sure you install <strong>Hugo &gt;= v0.112.4</strong></p></blockquote>
-<ul>
-<li>主题的安装路径：<code>/Users/bingxil/Bob_L_Hugo/themes</code></li>
-<li>PaperMode 的安装后的路径：<code>/Users/bingxil/Bob_L_Hugo/themes/PaperMod</code></li>
-</ul>
-<p>如果之前安装了，要重新删除的话，执行如下命令</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git submodule deinit -f themes/PaperMod 
-</span></span><span class="line"><span class="cl">git rm -f themes/PaperMod
-</span></span><span class="line"><span class="cl">rm -rf git/modules/themes/PaperMod
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>安装命令:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git submodule add --depth<span class="o">=</span><span class="m">1</span> https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
-</span></span><span class="line"><span class="cl">git submodule update --init --recursive <span class="c1"># needed when you reclone your repo (submodules may not get cloned automatically)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>最后，还需要在 <code>hugo.yml</code> add:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">theme</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;PaperMod&#34;</span><span class="p">]</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="接下来---自定义-papermod-以符合自己的偏好">接下来 - 自定义 PaperMod 以符合自己的偏好</h4>
-<ul>
-<li>
-<p>在第一次设置后，网站将是空白的</p>
-</li>
-<li>
-<p>可以查看此网站的源代码 - <a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite">https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite</a></p>
-</li>
-</ul>
-<h5 id="archives-layout">Archives Layout：</h5>
-<p><strong>把你所有文章按年份‑月份归档展示，生成 /archives/（或你自定义的路径）这一整页年表式清单</strong></p>
-<p>在 content 中创建一个 <code>archive.md</code></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">.
-</span></span><span class="line"><span class="cl">├── config.yml
-</span></span><span class="line"><span class="cl">├── content/
-</span></span><span class="line"><span class="cl">│   ├── archives.md   &lt;--- Create archive.md here
-</span></span><span class="line"><span class="cl">│   └── posts/
-</span></span><span class="line"><span class="cl">├── static/
-</span></span><span class="line"><span class="cl">└── themes/
-</span></span><span class="line"><span class="cl">    └── PaperMod/
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>在 <code>archive.md</code> 加入如下内容就行</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">---
-</span></span><span class="line"><span class="cl">title: &#34;Archive&#34;
-</span></span><span class="line"><span class="cl">layout: &#34;archives&#34;
-</span></span><span class="line"><span class="cl">url: &#34;/archives/&#34;
-</span></span><span class="line"><span class="cl">summary: archives
-</span></span><span class="line"><span class="cl">---
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>请注意：归档布局不支持多语言月份翻译</p>
-<h5 id="设置为-profile-mode">设置为 <a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Features#profile-mode">Profile Mode.</a></h5>
-<p>只需要在 <code>hugo.yml</code> 中加入如下内容：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">profileMode</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Bob L&#34;</span><span class="w"> </span><span class="c"># optional default will be site title</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">subtitle</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;diving..&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">imageUrl</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://s2.loli.net/2025/04/21/Bd2qcSlTQUYfDRa.png&#34;</span><span class="w"> </span><span class="c"># optional</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">imageTitle</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Bob_L&#34;</span><span class="w"> </span><span class="c"># optional</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">imageWidth</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="c"># custom size</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">imageHeight</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="c"># custom size</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">buttons</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Archive</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/archives&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Categories</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/Categories&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Github</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://github.com/Whaleer/&#34;</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>这里的内容是我的主题中的内容</p>
-<h2 id="01-cli">01: CLI</h2>
-<h3 id="hugo-new">hugo new</h3>
-<h2 id="02-content-management">02: Content management</h2>
-<h3 id="archetypes原型">Archetypes(原型)</h3>
-<blockquote>
-<p><strong>An archetype is a template for new content.</strong></p></blockquote>
-<p>archetype 相当于是一个内容的模板</p>
-<p><code>hugo new content</code> 命令会在 content 目录中创建一个新文件，并使用 archetype 作为模板</p>
-]]></content:encoded>
-    </item>
+    <lastBuildDate>Mon, 01 Apr 2024 11:58:05 +0800</lastBuildDate>
+    <atom:link href="https://bobliu.cc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Personal Page Build</title>
-      <link>http://localhost:1313/posts/post_01/personal-page-build/</link>
+      <link>https://bobliu.cc/posts/post_01/personal-page-build/</link>
       <pubDate>Mon, 01 Apr 2024 11:58:05 +0800</pubDate>
-      <guid>http://localhost:1313/posts/post_01/personal-page-build/</guid>
+      <guid>https://bobliu.cc/posts/post_01/personal-page-build/</guid>
       <description>&lt;h2 id=&#34;环境介绍&#34;&gt;环境介绍&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;建站工具：Hugo +  Github + Netlify + Aliyun + CloudFlare&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;电脑环境：MacOS Sonoma (14.3.1)&lt;/strong&gt;&lt;/p&gt;
@@ -408,9 +206,9 @@
     </item>
     <item>
       <title>About</title>
-      <link>http://localhost:1313/about/</link>
+      <link>https://bobliu.cc/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/about/</guid>
+      <guid>https://bobliu.cc/about/</guid>
       <description>&lt;h4 id=&#34;hi-im-bob-liu&#34;&gt;Hi!😸 I&amp;rsquo;m Bob Liu&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;I earned my undergraduate degree from CQUPT and am currently pursuing a master’s degree at NWNU.&lt;/li&gt;
