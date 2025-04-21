@@ -132,3 +132,16 @@ profileMode:
 archetype 相当于是一个内容的模板
 
 `hugo new content` 命令会在 content 目录中创建一个新文件，并使用 archetype 作为模板
+
+
+
+
+
+## 部署
+
+### Netlify
+
+**如何触发 Netlify build？**
+
+`git push origin main` —— Netlify 检测到推送后立即启动 build
+
