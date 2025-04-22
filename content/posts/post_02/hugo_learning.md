@@ -1,5 +1,5 @@
 +++
-title = 'Hugo_learning'
+title = 'Hugo Learning'
 
 date = 2025-04-21T14:09:03+08:00
 
@@ -25,8 +25,6 @@ PaperMod 有三种不同的模式（3 Modes）:
 
 安装详细内容可以参考 [hugo-PaperMod/wiki/Installation](https://github.com/adityatelange/hugo-PaperMod/wiki/Installation)
 
-> [!WARNING]	
->
 > Make sure you install **Hugo >= v0.112.4**
 
 - 主题的安装路径：`/Users/bingxil/Bob_L_Hugo/themes`
@@ -34,7 +32,7 @@ PaperMod 有三种不同的模式（3 Modes）:
 
 如果之前安装了，要重新删除的话，执行如下命令
 
-```
+```git
 git submodule deinit -f themes/PaperMod 
 git rm -f themes/PaperMod
 rm -rf git/modules/themes/PaperMod
@@ -65,7 +63,7 @@ theme: ["PaperMod"]
 
 在 content 中创建一个 `archive.md`
 
-```
+```bash
 .
 ├── config.yml
 ├── content/
@@ -78,7 +76,7 @@ theme: ["PaperMod"]
 
 在 `archive.md` 加入如下内容就行
 
-```
+```markdown
 ---
 title: "Archive"
 layout: "archives"
