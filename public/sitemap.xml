@@ -2,27 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://bobliu.cc/</loc>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2026-01-16T21:26:58+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2026-01-16T21:26:58+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/post_03/%E5%9C%A8%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%85%8D%E7%BD%AEcodex/</loc>
+    <lastmod>2026-01-16T21:26:58+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/hugo/</loc>
     <lastmod>2025-04-21T14:09:03+08:00</lastmod>
   </url><url>
-    <loc>https://bobliu.cc/posts/</loc>
+    <loc>http://localhost:1313/posts/post_02/hugo_learning/</loc>
     <lastmod>2025-04-21T14:09:03+08:00</lastmod>
   </url><url>
-    <loc>https://bobliu.cc/tags/hugo/</loc>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-04-21T14:09:03+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/post_01/personal-page-build/</loc>
     <lastmod>2024-04-01T11:58:05+08:00</lastmod>
   </url><url>
-    <loc>https://bobliu.cc/posts/post_01/personal-page-build/</loc>
-    <lastmod>2024-04-01T11:58:05+08:00</lastmod>
+    <loc>http://localhost:1313/about/</loc>
   </url><url>
-    <loc>https://bobliu.cc/tags/</loc>
-    <lastmod>2024-04-01T11:58:05+08:00</lastmod>
+    <loc>http://localhost:1313/archives/</loc>
   </url><url>
-    <loc>https://bobliu.cc/about/</loc>
+    <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>https://bobliu.cc/archives/</loc>
-  </url><url>
-    <loc>https://bobliu.cc/categories/</loc>
-  </url><url>
-    <loc>https://bobliu.cc/search/</loc>
+    <loc>http://localhost:1313/search/</loc>
   </url>
 </urlset>

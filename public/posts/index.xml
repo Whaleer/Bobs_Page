@@ -2,17 +2,530 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on Bob L Blogs</title>
-    <link>https://bobliu.cc/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on Bob L Blogs</description>
-    <generator>Hugo -- 0.146.6</generator>
+    <generator>Hugo -- 0.154.5</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Apr 2024 11:58:05 +0800</lastBuildDate>
-    <atom:link href="https://bobliu.cc/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 16 Jan 2026 21:26:58 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在远程服务器上配置Codex</title>
+      <link>http://localhost:1313/posts/post_03/%E5%9C%A8%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%85%8D%E7%BD%AEcodex/</link>
+      <pubDate>Fri, 16 Jan 2026 21:26:58 +0800</pubDate>
+      <guid>http://localhost:1313/posts/post_03/%E5%9C%A8%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%85%8D%E7%BD%AEcodex/</guid>
+      <description>&lt;p&gt;说明：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这里的服务器是腾讯云服务器，有公网IP的服务器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;思路如下：
+远程服务器上使用codex如果没有代理是无法运行的，所以这里的思路是在远程服务器上搭建一个代理，然后再运行codex&lt;/p&gt;
+&lt;h2 id=&#34;phase-1远程服务器上配置-clash&#34;&gt;Phase 1：远程服务器上配置 clash&lt;/h2&gt;
+&lt;h3 id=&#34;1-首先下载-clash-for-linux&#34;&gt;1. 首先下载 &lt;strong&gt;Clash for Linux&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;首先，从官方 GitHub 发布页面 &lt;a href=&#34;https://github.com/doreamon-design/clash/releases&#34;&gt;https://github.com/doreamon-design/clash/releases&lt;/a&gt; 下载适合你系统的 Clash 二进制文件。对于大多数 64 位系统，请选择 &lt;code&gt;clash_2.0.24_linux_amd64.tar.gz&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;下载之后，将压缩包上传到云服务器上，可以放在 &lt;code&gt;~&lt;/code&gt; 目录下，然后解压&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tar -xvf clash_2.0.24_linux_amd64.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;此命令将生成三个文件：clash（可执行文件）、&lt;a href=&#34;http://README.md&#34;&gt;README.md&lt;/a&gt; 和 LICENSE。只需要 clash 二进制文件。然后授予执行权限：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chmod +x clash
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;2-创建-configuration-directory&#34;&gt;2. 创建  &lt;strong&gt;Configuration Directory&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;Clash 将其配置文件存储在 &lt;code&gt;~/.config/clash/&lt;/code&gt; 中。如果此目录不存在，请手动创建它：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir ~/.config/clash
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后，将两个必需的文件添加到此文件夹：&lt;code&gt;config.yaml&lt;/code&gt;（你的订阅配置文件，定义节点、规则和端口） 和 &lt;code&gt;Country.mmdb&lt;/code&gt;（来自 MaxMind 的 GeoIP 数据库，用于识别目标 IP 的国家或地区）。&lt;/p&gt;
+&lt;p&gt;⚠️ 注意：&lt;code&gt;config.yaml&lt;/code&gt; 文件来自你的付费订阅。你需要先在本地获取它，然后将其上传到你的远程服务器。&lt;code&gt;Country.mmdb&lt;/code&gt; 文件通常随订阅自动下载。&lt;/p&gt;
+&lt;p&gt;购买订阅后，你可以按如下方式找到配置文件（这些操作在你的本地机器上执行，而不是在远程服务器上）：
+&lt;img alt=&#34;360&#34; loading=&#34;lazy&#34; src=&#34;https://s2.loli.net/2026/01/17/MGX9jNsKfbkJ5nv.png&#34;&gt;
+&lt;img alt=&#34;360&#34; loading=&#34;lazy&#34; src=&#34;https://s2.loli.net/2026/01/17/eqXC8nOyBi2pbNE.png&#34;&gt;
+&lt;img alt=&#34;360&#34; loading=&#34;lazy&#34; src=&#34;https://s2.loli.net/2026/01/17/BEz4QPaUtZORsyu.png&#34;&gt;
+&lt;img loading=&#34;lazy&#34; src=&#34;https://s2.loli.net/2026/01/17/m4IVDbutJL8156v.png&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;打开您想要上传到远程服务器的订阅。右键单击并选择“打开文件”，这里可以用VScode打开，然后再在VScode中打开这个文件夹，这将自动导航到相应的&lt;code&gt;.yaml&lt;/code&gt;配置文件。&lt;/li&gt;
+&lt;li&gt;在上传到远程服务器之前，将其重命名为&lt;code&gt;config.yaml&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;对于&lt;code&gt;Country.mmdb&lt;/code&gt;文件，你可以尝试在父目录中查找。如果它没有随您的订阅自动下载，您可以选择下面列出的一种方法：
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;自动下载它：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; ~/.config/clash/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget -O Country.mmdb &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb&amp;gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Manually download it from &lt;a href=&#34;https://github.com/Dreamacro/maxmind-geoip/releases&#34;&gt;MaxMind GeoIP Releases&lt;/a&gt; and then upload it to &lt;code&gt;~/.config/clash/&lt;/code&gt;.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>说明：</p>
+<ul>
+<li>这里的服务器是腾讯云服务器，有公网IP的服务器</li>
+</ul>
+<p>思路如下：
+远程服务器上使用codex如果没有代理是无法运行的，所以这里的思路是在远程服务器上搭建一个代理，然后再运行codex</p>
+<h2 id="phase-1远程服务器上配置-clash">Phase 1：远程服务器上配置 clash</h2>
+<h3 id="1-首先下载-clash-for-linux">1. 首先下载 <strong>Clash for Linux</strong></h3>
+<p>首先，从官方 GitHub 发布页面 <a href="https://github.com/doreamon-design/clash/releases">https://github.com/doreamon-design/clash/releases</a> 下载适合你系统的 Clash 二进制文件。对于大多数 64 位系统，请选择 <code>clash_2.0.24_linux_amd64.tar.gz</code></p>
+<p>下载之后，将压缩包上传到云服务器上，可以放在 <code>~</code> 目录下，然后解压</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tar -xvf clash_2.0.24_linux_amd64.tar.gz
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此命令将生成三个文件：clash（可执行文件）、<a href="http://README.md">README.md</a> 和 LICENSE。只需要 clash 二进制文件。然后授予执行权限：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod +x clash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-创建-configuration-directory">2. 创建  <strong>Configuration Directory</strong></h3>
+<p>Clash 将其配置文件存储在 <code>~/.config/clash/</code> 中。如果此目录不存在，请手动创建它：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir ~/.config/clash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后，将两个必需的文件添加到此文件夹：<code>config.yaml</code>（你的订阅配置文件，定义节点、规则和端口） 和 <code>Country.mmdb</code>（来自 MaxMind 的 GeoIP 数据库，用于识别目标 IP 的国家或地区）。</p>
+<p>⚠️ 注意：<code>config.yaml</code> 文件来自你的付费订阅。你需要先在本地获取它，然后将其上传到你的远程服务器。<code>Country.mmdb</code> 文件通常随订阅自动下载。</p>
+<p>购买订阅后，你可以按如下方式找到配置文件（这些操作在你的本地机器上执行，而不是在远程服务器上）：
+<img alt="360" loading="lazy" src="https://s2.loli.net/2026/01/17/MGX9jNsKfbkJ5nv.png">
+<img alt="360" loading="lazy" src="https://s2.loli.net/2026/01/17/eqXC8nOyBi2pbNE.png">
+<img alt="360" loading="lazy" src="https://s2.loli.net/2026/01/17/BEz4QPaUtZORsyu.png">
+<img loading="lazy" src="https://s2.loli.net/2026/01/17/m4IVDbutJL8156v.png"></p>
+<ol>
+<li>打开您想要上传到远程服务器的订阅。右键单击并选择“打开文件”，这里可以用VScode打开，然后再在VScode中打开这个文件夹，这将自动导航到相应的<code>.yaml</code>配置文件。</li>
+<li>在上传到远程服务器之前，将其重命名为<code>config.yaml</code>。</li>
+<li>对于<code>Country.mmdb</code>文件，你可以尝试在父目录中查找。如果它没有随您的订阅自动下载，您可以选择下面列出的一种方法：
+<ul>
+<li>
+<p>自动下载它：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> ~/.config/clash/
+</span></span><span class="line"><span class="cl">wget -O Country.mmdb <span class="s2">&#34;&lt;https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb&gt;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>Manually download it from <a href="https://github.com/Dreamacro/maxmind-geoip/releases">MaxMind GeoIP Releases</a> and then upload it to <code>~/.config/clash/</code>.</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-编辑-configyaml">3. 编辑 <strong><code>config.yaml</code>  File</strong></h3>
+<p>我的修改过后的 config.yaml 文件的基础配置如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">7892</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">socks-port</span><span class="p">:</span><span class="w"> </span><span class="m">7893</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">allow-lan</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">unified-delay</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">bind-address</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;*&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">dns</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">default-nameserver</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="m">223.5.5.5</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="m">119.29.29.29</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">ipv6</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">nameserver</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="m">223.5.5.5</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="m">223.6.6.6</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">external-controller</span><span class="p">:</span><span class="w"> </span><span class="m">127.0.0.1</span><span class="p">:</span><span class="m">9090</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">log-level</span><span class="p">:</span><span class="w"> </span><span class="l">info</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">rule</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nn">...</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里，<strong>port 指定 HTTP 代理端口（默认为 7890），socks-port 指定 SOCKS5 代理端口（默认为 7891）</strong>，external-controller 定义外部程序（如 Clash Dashboard）的管理 API 端口。默认端口可能与其他正在运行的代理程序冲突，因此您可以根据需要更改它们。例如，将 HTTP 端口设置为 7892，SOCKS5 端口设置为 7893（或您想要的任何其他数字）。</p>
+<h3 id="4-开始执行-clash">4. 开始执行 Clash</h3>
+<p>完成之前的步骤后，就可以启动 Clash 以启用代理。</p>
+<p>⚠️ 注意：这里最好将 clash 文件夹和 .config 文件夹放在同一目录下，这样clash 启动之后才可以读取到配置文件</p>
+<p>你应该看到类似下面的输出，其中的端口 7892 和 7893 对应于你配置的端口：
+<img loading="lazy" src="https://s2.loli.net/2026/01/17/oG2LQBYci9FvdKT.png">
+一旦 Clash 运行，测试代理是否工作。打开一个新的终端并设置系统代理：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span>http://127.0.0.1:7892  <span class="c1"># https</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span>http://127.0.0.1:7892   <span class="c1"># http</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">all_proxy</span><span class="o">=</span>socks5://127.0.0.1:7893  <span class="c1"># socks</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>同时，你的云服务器上的安全区应该将 7892,7893端口号添加进来，否则是无法成功开启服务的。
+<img loading="lazy" src="https://s2.loli.net/2026/01/17/9AiXOxeEvbrudtP.png"></p>
+<p>然后进行测试：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -v &lt;https://www.google.com&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>没有 Clash 代理，访问 <a href="https://www.google.com/"></a><a href="https://www.google.com">https://www.google.com</a> 将会失败，并出现“连接被拒绝”的错误。如果代理工作正常，该命令应该会成功，如下所示：
+<img loading="lazy" src="https://s2.loli.net/2026/01/17/5asHW1Xyj6xL7ed.png"></p>
+<h3 id="5-optional-将代理快捷键添加到-bashrc">5. (Optional) 将代理快捷键添加到 <code>.bashrc</code></h3>
+<p>为了避免每次打开新终端时手动设置系统代理，您可以将以下函数添加到您的 <code>~/.bashrc</code> 文件中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Proxy Setting</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> proxy_on<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span><span class="s2">&#34;&lt;http://127.0.0.1:7892&gt;&#34;</span>  <span class="c1"># http</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span><span class="nv">$http_proxy</span>  <span class="c1"># https</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">all_proxy</span><span class="o">=</span><span class="s2">&#34;socks5://127.0.0.1:7893&#34;</span>  <span class="c1"># socks</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">no_proxy</span><span class="o">=</span><span class="s2">&#34;localhost,127.0.0.1,localaddress,.localdomain.com&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e <span class="s2">&#34;Proxy On&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> proxy_off<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">unset</span> http_proxy
+</span></span><span class="line"><span class="cl">  <span class="nb">unset</span> https_proxy
+</span></span><span class="line"><span class="cl">  <span class="nb">unset</span> all_proxy
+</span></span><span class="line"><span class="cl">  <span class="nb">unset</span> no_proxy
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> -e <span class="s2">&#34;Proxy Off&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then reload the <code>.bashrc</code> file:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">source</span> ~/.bashrc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在您可以轻松切换代理了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">proxy_on   <span class="c1"># Enable proxy</span>
+</span></span><span class="line"><span class="cl">proxy_off  <span class="c1"># Disable proxy</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="phase-2远程服务器上配置-codex">Phase 2：远程服务器上配置 codex</h2>
+<p>前置条件：</p>
+<ol>
+<li>GPT plus/pro账户, 以确保能够使用codex功能</li>
+<li>在远程服务器上配置成功的代理, 也就是上一 Phase 的流程</li>
+</ol>
+<h3 id="具体操作流程">具体操作流程</h3>
+<p>Step 1. 查看clash配置中指定的端口号, 此处示例的port设置为7892。
+<img loading="lazy" src="https://s2.loli.net/2026/01/17/6aTBGSIl3YDepuZ.png"></p>
+<p>Step 2. 在VSCode中按<code>Ctrl + Shift + P</code>，选择 Preferences: Open User Settings (JSON)，打开<code>settings.json</code>，设置如下三行变量（注意这里变量的port要与Step 1中查看的port一致，比如这里都为7897）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="s2">&#34;http.proxy&#34;</span>: <span class="s2">&#34;&lt;http://127.0.0.1&gt;:YOURPORT&#34;</span>,
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;https.proxy&#34;</span>: <span class="s2">&#34;&lt;http://127.0.0.1&gt;:YOURPORT&#34;</span>,
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;http.proxyStrictSSL&#34;</span>: false,
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="https://s2.loli.net/2026/01/17/1guyZBElJmfTjXi.png"></p>
+<p>Step 3. 在vscode中按<code>Ctrl+shfit+P</code>，选择 Developer:Reload Window，重新加载一遍窗口。</p>
+<p>Step 4. 使用时首先在终端中<strong>打开clash</strong>，如果是第一次使用的话首先需要Sign in with ChatGPT，登录成功之后的界面如下图所示，然后就可以打开新聊天进行交流啦，注意整个登录和交流的过程中都需要<strong>保持clash代理处于打开的状态</strong>。</p>
+<hr>
+<h3 id="reference"><strong>Reference</strong></h3>
+<ul>
+<li><a href="https://ababababasmart.github.io//posts/2025/10/How-to-Use-Clash-on-a-Remote-Linux-Server/">https://ababababasmart.github.io//posts/2025/10/How-to-Use-Clash-on-a-Remote-Linux-Server/</a></li>
+<li><a href="https://ababababasmart.github.io/posts/2025/12/2025-12-24-How-to-Use-Codex-on-the-Remote-Server/">https://ababababasmart.github.io/posts/2025/12/2025-12-24-How-to-Use-Codex-on-the-Remote-Server/</a></li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Hugo Learning</title>
+      <link>http://localhost:1313/posts/post_02/hugo_learning/</link>
+      <pubDate>Mon, 21 Apr 2025 14:09:03 +0800</pubDate>
+      <guid>http://localhost:1313/posts/post_02/hugo_learning/</guid>
+      <description>&lt;h2 id=&#34;个人主题配置&#34;&gt;个人主题配置&lt;/h2&gt;
+&lt;h3 id=&#34;概述&#34;&gt;概述&lt;/h3&gt;
+&lt;p&gt;这里选用的是 &lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod&#34;&gt;hugo-PaperMod&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;PaperMod 有三种不同的模式（3 Modes）:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod/wiki/Features#regular-mode-default-mode&#34;&gt;Regular Mode.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod/wiki/Features#home-info-mode&#34;&gt;Home-Info Mode.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod/wiki/Features#profile-mode&#34;&gt;Profile Mode.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;主题安装&#34;&gt;主题安装&lt;/h3&gt;
+&lt;p&gt;安装详细内容可以参考 &lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod/wiki/Installation&#34;&gt;hugo-PaperMod/wiki/Installation&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Make sure you install &lt;strong&gt;Hugo &amp;gt;= v0.112.4&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;主题的安装路径：&lt;code&gt;/Users/bingxil/Bob_L_Hugo/themes&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;PaperMode 的安装后的路径：&lt;code&gt;/Users/bingxil/Bob_L_Hugo/themes/PaperMod&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果之前安装了，要重新删除的话，执行如下命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git submodule deinit -f themes/PaperMod 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git rm -f themes/PaperMod
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rm -rf git/modules/themes/PaperMod
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;安装命令:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git submodule add --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git submodule update --init --recursive &lt;span class=&#34;c1&#34;&gt;# needed when you reclone your repo (submodules may not get cloned automatically)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;最后，还需要在 &lt;code&gt;hugo.yml&lt;/code&gt; add:&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="个人主题配置">个人主题配置</h2>
+<h3 id="概述">概述</h3>
+<p>这里选用的是 <a href="https://github.com/adityatelange/hugo-PaperMod">hugo-PaperMod</a></p>
+<p>PaperMod 有三种不同的模式（3 Modes）:</p>
+<ul>
+<li><a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Features#regular-mode-default-mode">Regular Mode.</a></li>
+<li><a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Features#home-info-mode">Home-Info Mode.</a></li>
+<li><a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Features#profile-mode">Profile Mode.</a></li>
+</ul>
+<h3 id="主题安装">主题安装</h3>
+<p>安装详细内容可以参考 <a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Installation">hugo-PaperMod/wiki/Installation</a></p>
+<blockquote>
+<p>Make sure you install <strong>Hugo &gt;= v0.112.4</strong></p>
+</blockquote>
+<ul>
+<li>主题的安装路径：<code>/Users/bingxil/Bob_L_Hugo/themes</code></li>
+<li>PaperMode 的安装后的路径：<code>/Users/bingxil/Bob_L_Hugo/themes/PaperMod</code></li>
+</ul>
+<p>如果之前安装了，要重新删除的话，执行如下命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git submodule deinit -f themes/PaperMod 
+</span></span><span class="line"><span class="cl">git rm -f themes/PaperMod
+</span></span><span class="line"><span class="cl">rm -rf git/modules/themes/PaperMod
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装命令:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git submodule add --depth<span class="o">=</span><span class="m">1</span> https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+</span></span><span class="line"><span class="cl">git submodule update --init --recursive <span class="c1"># needed when you reclone your repo (submodules may not get cloned automatically)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后，还需要在 <code>hugo.yml</code> add:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">theme</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;PaperMod&#34;</span><span class="p">]</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="接下来---自定义-papermod-以符合自己的偏好">接下来 - 自定义 PaperMod 以符合自己的偏好</h4>
+<ul>
+<li>
+<p>在第一次设置后，网站将是空白的</p>
+</li>
+<li>
+<p>可以查看此网站的源代码 - <a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite">https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite</a></p>
+</li>
+</ul>
+<h5 id="archives-layout">Archives Layout：</h5>
+<p><strong>把你所有文章按年份‑月份归档展示，生成 /archives/（或你自定义的路径）这一整页年表式清单</strong></p>
+<p>在 content 中创建一个 <code>archive.md</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── config.yml
+</span></span><span class="line"><span class="cl">├── content/
+</span></span><span class="line"><span class="cl">│   ├── archives.md   &lt;--- Create archive.md here
+</span></span><span class="line"><span class="cl">│   └── posts/
+</span></span><span class="line"><span class="cl">├── static/
+</span></span><span class="line"><span class="cl">└── themes/
+</span></span><span class="line"><span class="cl">    └── PaperMod/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 <code>archive.md</code> 加入如下内容就行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">title: &#34;Archive&#34;
+</span></span><span class="line"><span class="cl">layout: &#34;archives&#34;
+</span></span><span class="line"><span class="cl">url: &#34;/archives/&#34;
+</span></span><span class="line"><span class="cl">summary: archives
+</span></span><span class="line"><span class="cl">---
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请注意：归档布局不支持多语言月份翻译</p>
+<h5 id="设置为-profile-mode">设置为 <a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Features#profile-mode">Profile Mode.</a></h5>
+<p>只需要在 <code>hugo.yml</code> 中加入如下内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">profileMode</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Bob L&#34;</span><span class="w"> </span><span class="c"># optional default will be site title</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">subtitle</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;diving..&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">imageUrl</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://s2.loli.net/2025/04/21/Bd2qcSlTQUYfDRa.png&#34;</span><span class="w"> </span><span class="c"># optional</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">imageTitle</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Bob_L&#34;</span><span class="w"> </span><span class="c"># optional</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">imageWidth</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="c"># custom size</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">imageHeight</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="c"># custom size</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">buttons</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Archive</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/archives&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Categories</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/Categories&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Github</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://github.com/Whaleer/&#34;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里的内容是我的主题中的内容</p>
+<h2 id="01-cli">01: CLI</h2>
+<h3 id="hugo-new">hugo new</h3>
+<h2 id="02-content-management">02: Content management</h2>
+<h3 id="archetypes原型">Archetypes(原型)</h3>
+<blockquote>
+<p><strong>An archetype is a template for new content.</strong></p>
+</blockquote>
+<p>archetype 相当于是一个内容的模板</p>
+<p><code>hugo new content</code> 命令会在 content 目录中创建一个新文件，并使用 archetype 作为模板</p>
+<h2 id="部署">部署</h2>
+<h3 id="netlify">Netlify</h3>
+<p><strong>如何触发 Netlify build？</strong></p>
+<p><code>git push origin main</code> —— Netlify 检测到推送后立即启动 build</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>Personal Page Build</title>
-      <link>https://bobliu.cc/posts/post_01/personal-page-build/</link>
+      <link>http://localhost:1313/posts/post_01/personal-page-build/</link>
       <pubDate>Mon, 01 Apr 2024 11:58:05 +0800</pubDate>
-      <guid>https://bobliu.cc/posts/post_01/personal-page-build/</guid>
+      <guid>http://localhost:1313/posts/post_01/personal-page-build/</guid>
       <description>&lt;h2 id=&#34;环境介绍&#34;&gt;环境介绍&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;建站工具：Hugo +  Github + Netlify + Aliyun + CloudFlare&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;电脑环境：MacOS Sonoma (14.3.1)&lt;/strong&gt;&lt;/p&gt;
@@ -164,9 +677,9 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git add .
-</span></span><span class="line"><span class="cl">git commit -m &#34;my blog first commit&#34;
-</span></span><span class="line"><span class="cl">git remote add origin &#34;远端github仓库地址&#34;
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;my blog first commit&#34;</span>
+</span></span><span class="line"><span class="cl">git remote add origin <span class="s2">&#34;远端github仓库地址&#34;</span>
 </span></span><span class="line"><span class="cl">git branch -M main
 </span></span><span class="line"><span class="cl">git push -u origin main
 </span></span></code></pre></td></tr></table>
