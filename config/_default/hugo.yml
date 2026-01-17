@@ -35,11 +35,11 @@ params:
 
   assets:
     # disableHLJS: true
-    favicon: "/Users/bingxil/Bob_L_Hugo/static/favicon.ico"
-    favicon16x16: "/Users/bingxil/Bob_L_Hugo/static/favicon-16x16.png"
-    favicon32x32: "/Users/bingxil/Bob_L_Hugo/static/favicon-32x32.png"
-    apple_touch_icon: "/Users/bingxil/Bob_L_Hugo/static/apple-touch-icon.png"
-    # safari_pinned_tab: "/Users/bingxil/Bob_L_Hugo/static/safari-pinned-tab.svg"
+    favicon: "favicon.ico"
+    favicon16x16: "favicon-16x16.png"
+    favicon32x32: "favicon-32x32.png"
+    apple_touch_icon: "apple-touch-icon.png"
+    # safari_pinned_tab: "safari-pinned-tab.svg"
 
 
   ShowAllPagesInArchive: true
