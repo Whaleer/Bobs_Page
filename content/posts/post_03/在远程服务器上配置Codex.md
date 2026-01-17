@@ -2,6 +2,7 @@
 title = '在远程服务器上配置Codex'
 date = 2026-01-16T21:26:58+08:00
 draft = false
+Tags = ["AI 相关"]
 +++
 
 说明：
