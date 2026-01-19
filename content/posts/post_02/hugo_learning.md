@@ -131,8 +131,12 @@ archetype 相当于是一个内容的模板
 
 `hugo new content` 命令会在 content 目录中创建一个新文件，并使用 archetype 作为模板
 
+### 创建新内容
 
-
+```bash
+$ hugo new content posts/post_03/test.md
+Content "/Users/bingxil/Bob_L_Hugo/content/posts/post_03/test.md" created
+```
 
 
 ## 部署

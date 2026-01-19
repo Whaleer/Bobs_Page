@@ -1,0 +1,68 @@
+{
+  "content/posts/post_02/hugo_learning.md": {
+    "scroll": 28.234941953874348,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": [
+      "item-3-2",
+      "item-2-0"
+    ]
+  },
+  "content/posts/post_01/Personal Page Build.md": {
+    "scroll": 68.23337279566901,
+    "cursor": {
+      "from": {
+        "line": 36,
+        "ch": 0
+      },
+      "to": {
+        "line": 36,
+        "ch": 0
+      }
+    },
+    "expandedKeys": [
+      "item-2-1",
+      "item-2-5",
+      "item-2-7"
+    ]
+  },
+  "content/posts/post_03/在远程服务器上配置Codex.md": {
+    "scroll": 25.264330428774965,
+    "cursor": {
+      "from": {
+        "line": 37,
+        "ch": 0
+      },
+      "to": {
+        "line": 37,
+        "ch": 0
+      }
+    },
+    "expandedKeys": [
+      "item-2-6",
+      "item-2-0"
+    ]
+  },
+  "archetypes/default.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 32,
+        "ch": 21
+      },
+      "to": {
+        "line": 32,
+        "ch": 21
+      }
+    },
+    "expandedKeys": []
+  }
+}

@@ -4,33 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "1208913d001d43d1",
+        "id": "09aaa28d5c69c7e7",
         "type": "tabs",
         "children": [
           {
-            "id": "36a16fe03654c62f",
+            "id": "27372d71266d2b30",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/posts/post_02/hugo_learning.md",
+                "file": "content/posts/post_03/在远程服务器上配置Codex.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "hugo_learning"
-            }
-          },
-          {
-            "id": "c2a4383bb9f28bb2",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "content/posts/post_01/pic/image1.png"
-              },
-              "icon": "lucide-image",
-              "title": "image1"
+              "title": "在远程服务器上配置Codex"
             }
           }
         ]
@@ -90,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 230.50260543823242
   },
   "right": {
     "id": "bc157b7d1e62da23",
@@ -168,16 +156,37 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/posts/post_02/hugo_learning.md",
-                "followCursor": false,
+                "file": "content/posts/post_03/在远程服务器上配置Codex.md",
+                "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "hugo_learning 的大纲"
+              "title": "在远程服务器上配置Codex 的大纲"
+            }
+          },
+          {
+            "id": "ba6eb6e85b8410df",
+            "type": "leaf",
+            "state": {
+              "type": "quiet-outline",
+              "state": {},
+              "icon": "lines-of-text",
+              "title": "Quiet Outline"
+            }
+          },
+          {
+            "id": "4d231ffc136a5bf8",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
             }
           }
-        ]
+        ],
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
@@ -192,18 +201,22 @@
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
-      "bases:新建数据库": false
+      "bases:新建数据库": false,
+      "markdown-importer:打开 Markdown 格式转换器": false,
+      "obsidian-git:Open Git source control": false
     }
   },
-  "active": "36a16fe03654c62f",
+  "active": "27372d71266d2b30",
   "lastOpenFiles": [
+    "new.canvas",
+    "content/posts/post_03/在远程服务器上配置Codex.md",
+    "content/posts/post_02/hugo_learning.md",
+    "archetypes/default.md",
+    "content/posts/post_01/pic/image1.png",
+    "content/posts/post_01/Personal Page Build.md",
     "public/posts/post_03/在远程服务器上配置codex/index.html",
     "public/posts/post_03/在远程服务器上配置codex",
     "public/posts/post_03",
-    "content/posts/post_01/Personal Page Build.md",
-    "content/posts/post_03/在远程服务器上配置Codex.md",
-    "content/posts/post_02/hugo_learning.md",
-    "content/posts/post_01/pic/image1.png",
     "未命名.canvas",
     "未命名.base",
     "2026-01-16.md"

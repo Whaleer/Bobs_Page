@@ -11,7 +11,7 @@ Tags = ["AI 相关"]
 思路如下：
 远程服务器上使用codex如果没有代理是无法运行的，所以这里的思路是在远程服务器上搭建一个代理，然后再运行codex
 ## Phase 1：远程服务器上配置 clash
-
+---
 ### 1. 首先下载 **Clash for Linux**
 首先，从官方 GitHub 发布页面 [https://github.com/doreamon-design/clash/releases](https://github.com/doreamon-design/clash/releases) 下载适合你系统的 Clash 二进制文件。对于大多数 64 位系统，请选择 `clash_2.0.24_linux_amd64.tar.gz`
 
@@ -33,6 +33,10 @@ mkdir ~/.config/clash
 ⚠️ 注意：`config.yaml` 文件来自你的付费订阅。你需要先在本地获取它，然后将其上传到你的远程服务器。`Country.mmdb` 文件通常随订阅自动下载。
 
 购买订阅后，你可以按如下方式找到配置文件（这些操作在你的本地机器上执行，而不是在远程服务器上）：
+
+
+
+
 ![360](https://s2.loli.net/2026/01/17/MGX9jNsKfbkJ5nv.png)
 ![360](https://s2.loli.net/2026/01/17/eqXC8nOyBi2pbNE.png)
 ![360](https://s2.loli.net/2026/01/17/BEz4QPaUtZORsyu.png)
@@ -140,7 +144,7 @@ proxy_on   # Enable proxy
 proxy_off  # Disable proxy
 ```
 ## Phase 2：远程服务器上配置 codex
-
+---
 前置条件：
 
 1. GPT plus/pro账户, 以确保能够使用codex功能
