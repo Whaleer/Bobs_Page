@@ -1,13 +1,13 @@
 {
   "content/posts/post_02/hugo_learning.md": {
-    "scroll": 28.234941953874348,
+    "scroll": 131.24639197758367,
     "cursor": {
       "from": {
-        "line": 0,
+        "line": 149,
         "ch": 0
       },
       "to": {
-        "line": 0,
+        "line": 149,
         "ch": 0
       }
     },
@@ -35,14 +35,14 @@
     ]
   },
   "content/posts/post_03/在远程服务器上配置Codex.md": {
-    "scroll": 25.264330428774965,
+    "scroll": 24.709179881914686,
     "cursor": {
       "from": {
-        "line": 37,
+        "line": 33,
         "ch": 0
       },
       "to": {
-        "line": 37,
+        "line": 33,
         "ch": 0
       }
     },
