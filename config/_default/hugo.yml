@@ -100,10 +100,10 @@ markup:
     guessSyntax: true
     hl_Lines: ""
     lineAnchors: ""
-    lineNoStart: 1   #行从几开始
-    lineNos: true   #是否显示行列
+    lineNoStart: 1
+    lineNos: false
     lineNumbersInTable: true
-    noClasses: false
-    style: catppuccin-frappe   #代码样式
+    noClasses: true
+    style: monokai
 
 
