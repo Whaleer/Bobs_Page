@@ -1,11 +1,11 @@
-<nav class="site-nav" aria-label="Main" data-pond-avoid>
+<nav class="site-nav" aria-label="Main" data-background-avoid>
   {{ range site.Menus.main }}
     {{ $active := or (and (eq .URL "/") $.IsHome) (and (ne .URL "/") (or (hasPrefix $.RelPermalink .URL) (and (eq .Name "blog") (eq $.Section "posts")))) }}
     <a href="{{ .URL | relURL }}" {{ if $active }}aria-current="page"{{ end }}>{{ .Name }}</a>
   {{ end }}
   {{ partial "theme-toggle.html" . }}
 </nav>
-<header class="mobile-header" data-pond-avoid>
+<header class="mobile-header" data-background-avoid>
   <a href="{{ `/` | relURL }}" class="mobile-brand">{{ hugo.Data.profile.name }}</a>
   <button class="menu-toggle icon-button" data-menu-toggle type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
     <span class="menu-open-icon">{{ partial "icon.html" "grid" }}</span>

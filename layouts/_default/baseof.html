@@ -26,8 +26,11 @@
   {{ $js := resources.Get "js/site.ts" | js.Build (dict "target" "es2020" "minify" hugo.IsProduction) | fingerprint }}
   <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
   {{ if .IsHome }}
-    {{ $pond := resources.Get "js/pond/index.ts" | js.Build (dict "target" "es2020" "minify" hugo.IsProduction) | fingerprint }}
-    <script src="{{ $pond.RelPermalink }}" integrity="{{ $pond.Data.Integrity }}" defer></script>
+    {{ with resources.Get hugo.Data.background.image }}
+      {{ $image := . | fingerprint }}<link rel="preload" as="image" href="{{ $image.RelPermalink }}">
+    {{ end }}
+    {{ $background := resources.Get "js/ascii/index.ts" | js.Build (dict "target" "es2020" "minify" hugo.IsProduction) | fingerprint }}
+    <script src="{{ $background.RelPermalink }}" integrity="{{ $background.Data.Integrity }}" defer></script>
   {{ end }}
 </head>
 <body class="{{ if .IsHome }}is-pond{{ else }}is-{{ .Section | default .Type }}{{ end }}">

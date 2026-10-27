@@ -1,6 +1,6 @@
 # Bob Liu · pond
 
-[bobliu.cc](https://bobliu.cc/) 的 Hugo 个人网站。四个主要页面是 `pond / projects / gallery / blog`：字符锦鲤首页、项目展示、画廊和博客。视觉方向参考 [Dao Ho](https://www.daoho.dev/)，锦鲤模拟与渲染在本站独立实现。
+[bobliu.cc](https://bobliu.cc/) 的 Hugo 个人网站。四个主要页面是 `pond / projects / gallery / blog`：彩色 ASCII 树冠首页、项目展示、画廊和博客。布局方向参考 [Dao Ho](https://www.daoho.dev/)，首页使用自己的图片生成字符画。
 
 ## 本地运行
 
@@ -23,6 +23,14 @@ hugo --gc --minify --cleanDestinationDir
 编辑 `data/profile.yaml`：姓名、问候语、短句、简介和社交链接。简介支持 Markdown。配色、字体和响应式样式位于 `assets/css/site.css`。
 
 字体自托管：Geist Mono 和 Playfair Display，字体授权文件随资源存放在 `static/fonts/`。中文正文使用设备自带的中文无衬线字体。
+
+### 更换 ASCII 背景
+
+编辑 `data/background.yaml`，`image` 是相对于 `assets/` 的图片路径。`focus.desktop` 和 `focus.mobile` 是原图中的裁切焦点，`x`、`y` 的范围为 0–1；手机默认围绕树干裁切。图像等比铺满画布，不会被拉伸。
+
+当前素材为 `assets/images/tree-canopy.webp`，由提供的树冠图压缩生成，原始 7708 × 4320 图片留在本地。以后换图时建议先导出压缩的 WebP，避免发布原始大文件。
+
+浏览器只在图片加载、主题切换或尺寸变化时重建字符缓存。平时以最高 30fps 轻微摆动，鼠标附近的字符会轻轻散开并复位。导航和简介背后会柔和淡化；打开菜单或切到其他标签时暂停，系统开启“减少动态效果”时呈现静态画面。没有 Canvas 或图片加载失败时，页面文字与导航仍可使用。
 
 ## 写博客
 
@@ -103,7 +111,7 @@ npm ci --ignore-scripts
 npm run check
 ```
 
-包含 TypeScript 类型检查、锦鲤模拟测试、生产构建、旧链接与站内资源检查、搜索/RSS 检查，以及使用临时内容验证项目和画廊模板。测试素材仅存在于系统临时目录，不会出现在正式网站。
+包含 TypeScript 类型检查、图片裁切/采样/字符明暗映射/鼠标扰动测试、生产构建、旧链接与站内资源检查、搜索/RSS 检查，以及使用临时内容验证项目和画廊模板。测试素材仅存在于系统临时目录，不会出现在正式网站。
 
 ## Netlify
 

@@ -8,6 +8,7 @@ import {
   cpSync,
   rmSync,
   readdirSync,
+  statSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve, dirname } from "node:path";
@@ -79,6 +80,25 @@ try {
     );
   assert.match(text("projects/index.html"), /coming soon\./);
   assert.match(text("gallery/index.html"), /coming soon\./);
+  const home = text("index.html");
+  assert.match(home, /id=ascii-background/);
+  assert.ok(
+    !home.includes("data-koi-count") && !home.includes("data-food-count"),
+  );
+  const background = home.match(/data-image=(?:"([^"]+)"|([^\s>]+))/);
+  assert.ok(background, "Homepage must reference the ASCII image source");
+  const backgroundFile = join(
+    output,
+    decodeURIComponent(background[1] || background[2]),
+  );
+  assert.ok(
+    existsSync(backgroundFile),
+    "The fingerprinted background must be published",
+  );
+  assert.ok(
+    statSync(backgroundFile).size < 400 * 1024,
+    "Publish an optimized image instead of the original photo",
+  );
   assert.match(
     text("posts/post_02/hugo_learning/index.html"),
     /<title>Hugo Learning/,
@@ -95,8 +115,11 @@ try {
 
   for (const file of files(output).filter((path) => path.endsWith(".html"))) {
     const html = readFileSync(file, "utf8");
-    for (const match of html.matchAll(/(?:href|src)="([^"#]+)"/g)) {
-      const href = match[1];
+    for (const match of html.matchAll(
+      /\s(?:href|src|data-image)=(?:"([^"]+)"|'([^']+)'|([^\s>]+))/g,
+    )) {
+      const href = match[1] || match[2] || match[3];
+      if (href.startsWith("#")) continue;
       if (/^(?:mailto:|tel:|data:|javascript:)/.test(href)) continue;
       const url = new URL(
         href,
