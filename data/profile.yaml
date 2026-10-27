@@ -2,8 +2,7 @@ name: Bob Liu
 greeting: "Hi, I'm Bob."
 tagline: "diving…"
 intro:
-  - "Exploring computer vision, embedded systems, and backend development."
-  - "A [CQUPT](/about/) graduate, currently pursuing my master's at [NWNU](/about/). My research focuses on medical image processing and segmentation."
+  - "I am just an ordinary coder.🎧“
 socials:
   - {label: github, url: "https://github.com/Whaleer/"}
   - {label: X, url: "https://x.com/Bob_Lliu"}
