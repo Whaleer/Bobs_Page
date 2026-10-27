@@ -45,16 +45,6 @@ export const GLYPHS = " .:-=+*#%@";
 export const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
-/** Conservative green selection leaves blue sky and dark wood in the still layer. */
-export function isFoliage(sample: Sample) {
-  return (
-    sample.alpha > 0 &&
-    sample.luminance > 0.24 &&
-    sample.green - sample.red > 5 &&
-    sample.green - sample.blue > 12
-  );
-}
-
 export function insidePolygon(point: Point, polygon: Point[]) {
   let inside = false;
   for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
@@ -78,29 +68,50 @@ export function insidePolygon(point: Point, polygon: Point[]) {
   return inside;
 }
 
-export function foliageCells(
-  samples: Sample[],
-  columns: number,
-  rows: number,
+export function projectTrunkRegions(
+  regions: Point[][],
   crop: Crop,
   imageWidth: number,
   imageHeight: number,
-  stationaryRegions: Point[][],
+  width: number,
+  height: number,
 ) {
-  return samples.map((sample, index) => {
-    const point = {
-      x:
-        (crop.x + (((index % columns) + 0.5) / columns) * crop.width) /
-        imageWidth,
-      y:
-        (crop.y + ((Math.floor(index / columns) + 0.5) / rows) * crop.height) /
-        imageHeight,
-    };
-    return (
-      isFoliage(sample) &&
-      !stationaryRegions.some((region) => insidePolygon(point, region))
-    );
-  });
+  return regions.map((region) =>
+    region.map((point) => ({
+      x: ((point.x * imageWidth - crop.x) / crop.width) * width,
+      y: ((point.y * imageHeight - crop.y) / crop.height) * height,
+    })),
+  );
+}
+
+/** A soft distance field reduces motion without separating or clipping the image. */
+export function trunkWindScale(
+  point: Point,
+  regions: Point[][],
+  cellWidth: number,
+) {
+  let distance = Infinity;
+  for (const polygon of regions) {
+    if (insidePolygon(point, polygon)) return 0.2;
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+      const a = polygon[j];
+      const b = polygon[i];
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const t = clamp(
+        ((point.x - a.x) * dx + (point.y - a.y) * dy) /
+          (dx * dx + dy * dy || 1),
+        0,
+        1,
+      );
+      distance = Math.min(
+        distance,
+        Math.hypot(point.x - a.x - dx * t, point.y - a.y - dy * t),
+      );
+    }
+  }
+  const t = clamp(distance / (cellWidth * 24), 0, 1);
+  return 0.2 + 0.8 * t * t * (3 - 2 * t);
 }
 
 /** A continuous field keeps nearby leaf groups moving together, without random phases. */
@@ -109,6 +120,7 @@ export function desktopWindAt(
   x: number,
   y: number,
   cellWidth: number,
+  strength = 1,
 ) {
   const amplitude = clamp(cellWidth * 0.7, 5, 8);
   const phaseX = x / 360;
@@ -117,12 +129,17 @@ export function desktopWindAt(
     x:
       amplitude *
       (Math.sin(time * 0.92 + phaseY + phaseX * 0.45) * 0.74 +
-        Math.sin(time * 1.26 - phaseX * 0.8 + phaseY * 0.3) * 0.26),
+        Math.sin(time * 1.26 - phaseX * 0.8 + phaseY * 0.3) * 0.26) *
+      strength,
     y:
       clamp(amplitude * 0.25, 1, 2) *
       (Math.sin(time * 0.83 + phaseX * 0.75 - phaseY * 0.35) * 0.7 +
-        Math.sin(time * 1.17 + phaseY * 0.8) * 0.3),
-    alpha: 0.97 + Math.sin(time * 0.88 + phaseX * 0.7 + phaseY * 0.65) * 0.03,
+        Math.sin(time * 1.17 + phaseY * 0.8) * 0.3) *
+      strength,
+    alpha:
+      1 +
+      (0.97 + Math.sin(time * 0.88 + phaseX * 0.7 + phaseY * 0.65) * 0.03 - 1) *
+        strength,
   };
 }
 

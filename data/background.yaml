@@ -3,8 +3,8 @@ image: images/tree-canopy.webp
 focus:
   desktop: { x: 0.5, y: 0.5 }
   mobile: { x: 0.64, y: 0.55 }
-# Source-image polygons (0–1) protect the trunk and main branches from leaf motion.
-stationary_regions:
+# Source-image polygons (0–1) reduce trunk and main-branch motion to 20%.
+trunk_regions:
   - [
       { x: 0.70, y: 1 },
       { x: 0.90, y: 1 },

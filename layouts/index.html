@@ -3,7 +3,7 @@
 {{ $image := . | fingerprint }}
 <canvas class="ascii-background" id="ascii-background" aria-hidden="true"
   data-image="{{ $image.RelPermalink }}"
-  data-stationary-regions="{{ hugo.Data.background.stationary_regions | default slice | jsonify }}"
+  data-trunk-regions="{{ hugo.Data.background.trunk_regions | default slice | jsonify }}"
   data-focus-desktop-x="{{ hugo.Data.background.focus.desktop.x }}"
   data-focus-desktop-y="{{ hugo.Data.background.focus.desktop.y }}"
   data-focus-mobile-x="{{ hugo.Data.background.focus.mobile.x }}"

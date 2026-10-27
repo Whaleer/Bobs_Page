@@ -9,72 +9,102 @@ import {
   motionMode,
   readabilityAt,
   desktopWindAt,
-  isFoliage,
   insidePolygon,
-  foliageCells,
+  projectTrunkRegions,
+  trunkWindScale,
 } from "../assets/js/ascii/model.ts";
 
-test("only green foliage enters the moving layer, excluding sky and wood", () => {
-  const sample = (r, g, b) => samplePixels([r, g, b, 255], 1, 1)[0];
-  assert.equal(isFoliage(sample(70, 120, 45)), true);
-  assert.equal(isFoliage(sample(180, 205, 110)), true);
-  for (const rgb of [
-    [70, 150, 200],
-    [100, 170, 180],
-    [18, 45, 50],
-    [130, 100, 60],
-  ])
-    assert.equal(isFoliage(sample(...rgb)), false);
+test("trunk damping stays between 20% and full wind with smooth boundaries", () => {
+  const region = [
+    { x: 100, y: 100 },
+    { x: 200, y: 100 },
+    { x: 200, y: 300 },
+    { x: 100, y: 300 },
+  ];
+  assert.equal(insidePolygon({ x: 150, y: 200 }, region), true);
+  for (const cellWidth of [8, 2560 / 240, 16]) {
+    const feather = cellWidth * 24;
+    assert.equal(trunkWindScale({ x: 150, y: 200 }, [region], cellWidth), 0.2);
+    assert.equal(trunkWindScale({ x: 200, y: 200 }, [region], cellWidth), 0.2);
+    let previous = 0.2;
+    for (let i = 0; i <= 100; i++) {
+      const value = trunkWindScale(
+        { x: 200 + (feather * i) / 100, y: 200 },
+        [region],
+        cellWidth,
+      );
+      assert.ok(value >= 0.2 && value <= 1 && value >= previous);
+      previous = value;
+    }
+    assert.equal(previous, 1);
+    assert.ok(
+      trunkWindScale({ x: 200 + 0.001, y: 200 }, [region], cellWidth) - 0.2 <
+        1e-7,
+    );
+    assert.ok(
+      1 -
+        trunkWindScale(
+          { x: 200 + feather - 0.001, y: 200 },
+          [region],
+          cellWidth,
+        ) <
+        1e-7,
+    );
+  }
+  assert.equal(trunkWindScale({ x: 150, y: 200 }, [], 8), 1);
 });
 
-test("trunk protection stays anchored to the source image through different crops", () => {
-  const region = [
+test("damping preserves the wind's direction and phase while scaling motion and shade", () => {
+  for (const cellWidth of [8, 2560 / 240, 16])
+    for (let time = 0; time < 16; time += 0.1) {
+      const full = desktopWindAt(time, 800, 500, cellWidth);
+      const trunk = desktopWindAt(time, 800, 500, cellWidth, 0.2);
+      assert.ok(Math.abs(trunk.x - full.x * 0.2) < 1e-12);
+      assert.ok(Math.abs(trunk.y - full.y * 0.2) < 1e-12);
+      assert.ok(Math.abs(trunk.alpha - 1 - (full.alpha - 1) * 0.2) < 1e-12);
+    }
+});
+
+test("trunk damping tracks the source image through different viewport crops", () => {
+  const sourceRegion = [
     { x: 0.4, y: 0.4 },
     { x: 0.6, y: 0.4 },
-    { x: 0.6, y: 1 },
-    { x: 0.4, y: 1 },
+    { x: 0.6, y: 0.9 },
+    { x: 0.4, y: 0.9 },
   ];
-  assert.equal(insidePolygon({ x: 0.5, y: 0.5 }, region), true);
-  assert.equal(insidePolygon({ x: 0.4, y: 0.5 }, region), true);
-  assert.equal(insidePolygon({ x: 0.2, y: 0.5 }, region), false);
-  const green = samplePixels([70, 120, 45, 255], 1, 1)[0];
-  const samples = Array(9).fill(green);
-  const full = foliageCells(
-    samples,
-    3,
-    3,
-    { x: 0, y: 0, width: 1200, height: 673 },
-    1200,
-    673,
-    [region],
-  );
-  assert.equal(full[4], false);
-  assert.equal(full[7], false);
-  assert.equal(full[3], true);
-  assert.deepEqual(
-    foliageCells(
-      [green, green],
-      2,
-      1,
-      { x: 400, y: 0, width: 400, height: 673 },
+  for (const [width, height, focus] of [
+    [1280, 720, { x: 0.5, y: 0.5 }],
+    [1920, 1080, { x: 0.5, y: 0.5 }],
+    [2560, 1440, { x: 0.5, y: 0.5 }],
+    [1280, 1080, { x: 0.8, y: 0.5 }],
+  ]) {
+    const crop = coverCrop(1200, 673, width, height, focus);
+    const regions = projectTrunkRegions(
+      [sourceRegion],
+      crop,
       1200,
       673,
-      [region],
-    ),
-    [false, false],
-  );
-  assert.deepEqual(
-    foliageCells(
-      [green, green],
-      2,
-      1,
-      { x: 0, y: 0, width: 400, height: 673 },
-      1200,
-      673,
-      [region],
-    ),
-    [true, true],
-  );
+      width,
+      height,
+    );
+    const trunk = {
+      x: ((0.5 * 1200 - crop.x) / crop.width) * width,
+      y: ((0.65 * 673 - crop.y) / crop.height) * height,
+    };
+    assert.ok(insidePolygon(trunk, regions[0]));
+    assert.equal(
+      trunkWindScale(
+        trunk,
+        regions,
+        width / Math.min(240, Math.ceil(width / 8)),
+      ),
+      0.2,
+    );
+    assert.deepEqual(regions[0][0], {
+      x: ((0.4 * 1200 - crop.x) / crop.width) * width,
+      y: ((0.4 * 673 - crop.y) / crop.height) * height,
+    });
+  }
 });
 
 test("desktop wind is visible over a cycle and stays within gentle displacement and shade limits", () => {
