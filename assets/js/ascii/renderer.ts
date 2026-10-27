@@ -2,6 +2,7 @@ import {
   colorForTheme,
   coverCrop,
   desktopWindAt,
+  foliageCells,
   glyphForLuminance,
   readabilityAt,
   samplePixels,
@@ -25,6 +26,7 @@ interface Tile {
   sourceY: number;
   width: number;
   height: number;
+  active: boolean;
 }
 
 const TILE_COLUMNS = 8;
@@ -33,6 +35,7 @@ const TILE_ROWS = 4;
 export class AsciiRenderer {
   private context: CanvasRenderingContext2D;
   private cache = document.createElement("canvas");
+  private still = document.createElement("canvas");
   private mask = document.createElement("canvas");
   private sampler = document.createElement("canvas");
   private width = 0;
@@ -43,6 +46,9 @@ export class AsciiRenderer {
   private cellWidth = 8;
   private cellHeight = 13.2;
   private samples: Sample[] = [];
+  private foliage: boolean[] = [];
+  private stationaryRegions: Point[][] = [];
+  private stationaryPath = new Path2D();
   private cells: Cell[] = [];
   private tiles: Tile[] = [];
   private tileColumns = 0;
@@ -59,6 +65,11 @@ export class AsciiRenderer {
 
   setImage(image: HTMLImageElement) {
     this.image = image;
+    this.resample();
+  }
+
+  setStationaryRegions(regions: Point[][]) {
+    this.stationaryRegions = regions;
     this.resample();
   }
 
@@ -88,6 +99,8 @@ export class AsciiRenderer {
     this.rows = Math.ceil(height / this.cellHeight);
     this.context.canvas.width = Math.round(width * ratio);
     this.context.canvas.height = Math.round(height * ratio);
+    this.still.width = width >= 1024 ? this.context.canvas.width : 1;
+    this.still.height = width >= 1024 ? this.context.canvas.height : 1;
     this.prepareCache();
     this.resample();
   }
@@ -128,6 +141,11 @@ export class AsciiRenderer {
       this.cache.height / this.ratio,
     );
     this.font(context);
+    const still = this.still.getContext("2d")!;
+    still.setTransform(this.ratio, 0, 0, this.ratio, 0, 0);
+    still.clearRect(0, 0, this.width, this.height);
+    this.font(still);
+    for (const tile of this.tiles) tile.active = false;
     this.cells = this.samples.map((sample, index) => ({
       x: ((index % this.columns) + 0.5) * this.cellWidth,
       y: (Math.floor(index / this.columns) + 0.5) * this.cellHeight,
@@ -137,6 +155,10 @@ export class AsciiRenderer {
     }));
     for (const [index, cell] of this.cells.entries()) {
       if (this.tiles.length) {
+        if (!this.foliage[index]) {
+          this.drawCell(still, cell, cell.x, cell.y);
+          continue;
+        }
         const row = Math.floor(index / this.columns);
         const col = index % this.columns;
         const tile =
@@ -144,6 +166,7 @@ export class AsciiRenderer {
             Math.floor(row / TILE_ROWS) * this.tileColumns +
               Math.floor(col / TILE_COLUMNS)
           ];
+        if (cell.glyph !== " " && cell.alpha > 0) tile.active = true;
         this.drawCell(
           context,
           cell,
@@ -153,6 +176,7 @@ export class AsciiRenderer {
       } else this.drawCell(context, cell, cell.x, cell.y);
     }
     context.globalAlpha = 1;
+    still.globalAlpha = 1;
   }
 
   render(time: number, animate: boolean) {
@@ -163,6 +187,7 @@ export class AsciiRenderer {
     context.globalAlpha = 1;
     if (this.tiles.length) {
       for (const tile of this.tiles) {
+        if (!tile.active) continue;
         const wind = animate
           ? desktopWindAt(
               time,
@@ -184,6 +209,15 @@ export class AsciiRenderer {
           tile.height / this.ratio,
         );
       }
+      // Leaves can pass behind a branch, but never repaint its fixed silhouette.
+      if (animate && this.stationaryRegions.length) {
+        context.save();
+        context.clip(this.stationaryPath);
+        context.clearRect(0, 0, this.width, this.height);
+        context.restore();
+      }
+      context.globalAlpha = 1;
+      context.drawImage(this.still, 0, 0, this.width, this.height);
     } else if (animate) {
       // Each band contains complete glyph rows; wind never resamples or changes the characters.
       const bandHeight = this.cellHeight * 2;
@@ -241,6 +275,7 @@ export class AsciiRenderer {
           sourceY: row * slotHeight,
           width: slotWidth,
           height: slotHeight,
+          active: false,
         });
   }
 
@@ -276,6 +311,29 @@ export class AsciiRenderer {
       this.columns,
       this.rows,
     );
+    this.foliage = foliageCells(
+      this.samples,
+      this.columns,
+      this.rows,
+      crop,
+      this.image.naturalWidth,
+      this.image.naturalHeight,
+      this.stationaryRegions,
+    );
+    this.stationaryPath = new Path2D();
+    for (const polygon of this.stationaryRegions) {
+      polygon.forEach((point, index) => {
+        const x =
+          ((point.x * this.image!.naturalWidth - crop.x) / crop.width) *
+          this.width;
+        const y =
+          ((point.y * this.image!.naturalHeight - crop.y) / crop.height) *
+          this.height;
+        if (index === 0) this.stationaryPath.moveTo(x, y);
+        else this.stationaryPath.lineTo(x, y);
+      });
+      this.stationaryPath.closePath();
+    }
     this.refreshFont();
   }
 

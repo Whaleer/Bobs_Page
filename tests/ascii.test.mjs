@@ -9,7 +9,73 @@ import {
   motionMode,
   readabilityAt,
   desktopWindAt,
+  isFoliage,
+  insidePolygon,
+  foliageCells,
 } from "../assets/js/ascii/model.ts";
+
+test("only green foliage enters the moving layer, excluding sky and wood", () => {
+  const sample = (r, g, b) => samplePixels([r, g, b, 255], 1, 1)[0];
+  assert.equal(isFoliage(sample(70, 120, 45)), true);
+  assert.equal(isFoliage(sample(180, 205, 110)), true);
+  for (const rgb of [
+    [70, 150, 200],
+    [100, 170, 180],
+    [18, 45, 50],
+    [130, 100, 60],
+  ])
+    assert.equal(isFoliage(sample(...rgb)), false);
+});
+
+test("trunk protection stays anchored to the source image through different crops", () => {
+  const region = [
+    { x: 0.4, y: 0.4 },
+    { x: 0.6, y: 0.4 },
+    { x: 0.6, y: 1 },
+    { x: 0.4, y: 1 },
+  ];
+  assert.equal(insidePolygon({ x: 0.5, y: 0.5 }, region), true);
+  assert.equal(insidePolygon({ x: 0.4, y: 0.5 }, region), true);
+  assert.equal(insidePolygon({ x: 0.2, y: 0.5 }, region), false);
+  const green = samplePixels([70, 120, 45, 255], 1, 1)[0];
+  const samples = Array(9).fill(green);
+  const full = foliageCells(
+    samples,
+    3,
+    3,
+    { x: 0, y: 0, width: 1200, height: 673 },
+    1200,
+    673,
+    [region],
+  );
+  assert.equal(full[4], false);
+  assert.equal(full[7], false);
+  assert.equal(full[3], true);
+  assert.deepEqual(
+    foliageCells(
+      [green, green],
+      2,
+      1,
+      { x: 400, y: 0, width: 400, height: 673 },
+      1200,
+      673,
+      [region],
+    ),
+    [false, false],
+  );
+  assert.deepEqual(
+    foliageCells(
+      [green, green],
+      2,
+      1,
+      { x: 0, y: 0, width: 400, height: 673 },
+      1200,
+      673,
+      [region],
+    ),
+    [true, true],
+  );
+});
 
 test("desktop wind is visible over a cycle and stays within gentle displacement and shade limits", () => {
   for (const cellWidth of [8, 2560 / 240, 16]) {

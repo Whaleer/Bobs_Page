@@ -45,6 +45,64 @@ export const GLYPHS = " .:-=+*#%@";
 export const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
+/** Conservative green selection leaves blue sky and dark wood in the still layer. */
+export function isFoliage(sample: Sample) {
+  return (
+    sample.alpha > 0 &&
+    sample.luminance > 0.24 &&
+    sample.green - sample.red > 5 &&
+    sample.green - sample.blue > 12
+  );
+}
+
+export function insidePolygon(point: Point, polygon: Point[]) {
+  let inside = false;
+  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+    const a = polygon[j];
+    const b = polygon[i];
+    const cross = (point.x - a.x) * (b.y - a.y) - (point.y - a.y) * (b.x - a.x);
+    if (
+      Math.abs(cross) < 1e-10 &&
+      point.x >= Math.min(a.x, b.x) &&
+      point.x <= Math.max(a.x, b.x) &&
+      point.y >= Math.min(a.y, b.y) &&
+      point.y <= Math.max(a.y, b.y)
+    )
+      return true;
+    if (
+      a.y > point.y !== b.y > point.y &&
+      point.x < ((b.x - a.x) * (point.y - a.y)) / (b.y - a.y) + a.x
+    )
+      inside = !inside;
+  }
+  return inside;
+}
+
+export function foliageCells(
+  samples: Sample[],
+  columns: number,
+  rows: number,
+  crop: Crop,
+  imageWidth: number,
+  imageHeight: number,
+  stationaryRegions: Point[][],
+) {
+  return samples.map((sample, index) => {
+    const point = {
+      x:
+        (crop.x + (((index % columns) + 0.5) / columns) * crop.width) /
+        imageWidth,
+      y:
+        (crop.y + ((Math.floor(index / columns) + 0.5) / rows) * crop.height) /
+        imageHeight,
+    };
+    return (
+      isFoliage(sample) &&
+      !stationaryRegions.some((region) => insidePolygon(point, region))
+    );
+  });
+}
+
 /** A continuous field keeps nearby leaf groups moving together, without random phases. */
 export function desktopWindAt(
   time: number,

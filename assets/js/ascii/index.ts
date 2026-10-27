@@ -12,6 +12,9 @@ if (canvas) {
 
 function startBackground(canvas: HTMLCanvasElement) {
   const renderer = new AsciiRenderer(canvas);
+  renderer.setStationaryRegions(
+    JSON.parse(canvas.dataset.stationaryRegions || "[]"),
+  );
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   const image = new Image();
   const dialogs = Array.from(
