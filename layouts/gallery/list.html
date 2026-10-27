@@ -1,0 +1,9 @@
+{{ define "main" }}
+{{ $works := hugo.Data.gallery.works }}
+{{ if $works }}
+<main id="main-content" class="gallery-main content-width"><header class="page-heading"><div><p class="eyebrow">a collection of small observations</p><h1>Gallery</h1></div></header>
+<div class="gallery-grid">{{ range $i, $work := sort $works "order" "asc" }}<figure class="gallery-work"><button class="gallery-image" type="button" data-gallery-open data-image="{{ .image | relURL }}" data-title="{{ .title }}" data-year="{{ .year }}" data-description="{{ .description }}" aria-label="View {{ .title }} larger"><img src="{{ .image | relURL }}" alt="{{ .title }}" loading="lazy"{{ with .width }} width="{{ . }}"{{ end }}{{ with .height }} height="{{ . }}"{{ end }}></button><figcaption><span>{{ .title }}</span><span>{{ .year }}</span></figcaption></figure>{{ end }}</div>
+</main>
+<dialog class="gallery-lightbox" id="gallery-lightbox" aria-label="Artwork viewer"><button class="lightbox-close icon-button" data-lightbox-close aria-label="Close viewer">{{ partial "icon.html" "close" }}</button><button class="lightbox-prev icon-button" data-lightbox-prev aria-label="Previous work">{{ partial "icon.html" "left" }}</button><figure><img id="lightbox-image" alt=""><figcaption id="lightbox-caption" aria-live="polite"></figcaption></figure><button class="lightbox-next icon-button" data-lightbox-next aria-label="Next work">{{ partial "icon.html" "right" }}</button></dialog>
+{{ else }}<main id="main-content" class="empty-page"><p>coming soon.<span class="terminal-cursor" aria-hidden="true"></span></p></main>{{ end }}
+{{ end }}

@@ -1,0 +1,21 @@
+{{ define "main" }}
+{{ with resources.Get hugo.Data.background.image }}
+{{ $image := . | fingerprint }}
+<canvas class="ascii-background" id="ascii-background" aria-hidden="true"
+  data-image="{{ $image.RelPermalink }}"
+  data-focus-desktop-x="{{ hugo.Data.background.focus.desktop.x }}"
+  data-focus-desktop-y="{{ hugo.Data.background.focus.desktop.y }}"
+  data-focus-mobile-x="{{ hugo.Data.background.focus.mobile.x }}"
+  data-focus-mobile-y="{{ hugo.Data.background.focus.mobile.y }}"></canvas>
+{{ end }}
+<main id="main-content" class="pond-main">
+  <header class="hero-copy" data-background-avoid>
+    <p class="hero-quote">{{ hugo.Data.profile.tagline }}<span class="terminal-cursor" aria-hidden="true"></span></p>
+    <div class="hero-intro">
+      <h1>{{ hugo.Data.profile.greeting }}</h1>
+      {{ range hugo.Data.profile.intro }}<p>{{ . | markdownify }}</p>{{ end }}
+      <p class="social-links">{{ range $i, $social := hugo.Data.profile.socials }}{{ if $i }}<span aria-hidden="true"> / </span>{{ end }}<a href="{{ .url | safeURL }}"{{ if hasPrefix .url "https://" }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .label }}</a>{{ end }}</p>
+    </div>
+  </header>
+</main>
+{{ end }}

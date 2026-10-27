@@ -1,0 +1,18 @@
+{
+  "name": "bobs-pond",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "dev": "hugo server --disableFastRender",
+    "build": "hugo --gc --minify --cleanDestinationDir",
+    "test": "node --test tests/*.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test && node scripts/check-site.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}

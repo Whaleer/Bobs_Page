@@ -1,0 +1,18 @@
+{{ define "main" }}
+<main id="main-content" class="article-width article-main">
+  <a class="back-link" href="{{ `blog/` | relURL }}">← back to blog</a>
+  <article>
+    <header class="article-header"><h1>{{ .Title }}</h1>
+    {{ if eq .Section "posts" }}<div class="article-meta"><time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format "Jan 02, 2006" }}</time><span>{{ .ReadingTime }} min read</span></div>{{ end }}
+    {{ with .GetTerms "tags" }}<div class="article-tags">{{ range . }}<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}</div>{{ end }}
+    </header>
+    {{ if and (eq .Section "posts") (gt .WordCount 200) }}<details class="article-toc"><summary>On this page</summary>{{ .TableOfContents }}</details>{{ end }}
+    <div class="prose">{{ .Content }}</div>
+    {{ if eq .Section "posts" }}
+    <nav class="article-pagination" aria-label="Other articles">
+      <div>{{ with .PrevInSection }}<a href="{{ .RelPermalink }}"><span>← older</span>{{ .Title }}</a>{{ end }}</div>
+      <div>{{ with .NextInSection }}<a href="{{ .RelPermalink }}"><span>newer →</span>{{ .Title }}</a>{{ end }}</div>
+    </nav>{{ end }}
+  </article>
+</main>
+{{ end }}

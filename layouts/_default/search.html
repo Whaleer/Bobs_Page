@@ -1,0 +1,10 @@
+{{ define "main" }}
+<main id="main-content" class="content-width blog-main">
+  <a class="back-link" href="{{ `blog/` | relURL }}">← back to blog</a>
+  <header class="page-heading"><h1>Search</h1></header>
+  <div class="search-box"><label class="sr-only" for="search-input">Search articles</label>{{ partial "icon.html" "search" }}<input id="search-input" type="search" placeholder="Search notes, code, ideas…" autocomplete="off" data-search-index="{{ `index.json` | relURL }}"><kbd>/</kbd></div>
+  <p class="search-status" role="status" aria-live="polite">Search in English or Chinese.</p>
+  <div id="search-results" class="post-list"></div>
+  <noscript><p class="search-status">Search uses JavaScript. You can browse the <a href="{{ `archives/` | relURL }}">archive</a> instead.</p></noscript>
+</main>
+{{ end }}

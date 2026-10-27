@@ -1,0 +1,11 @@
+name: Bob Liu
+greeting: "Hi, I'm Bob."
+tagline: "diving…"
+intro:
+  - "Exploring computer vision, embedded systems, and backend development."
+  - "A [CQUPT](/about/) graduate, currently pursuing my master's at [NWNU](/about/). My research focuses on medical image processing and segmentation."
+socials:
+  - {label: github, url: "https://github.com/Whaleer/"}
+  - {label: bilibili, url: "https://space.bilibili.com/11530473"}
+  - {label: qq, url: "https://qm.qq.com/q/aV0GnjPzQA"}
+  - {label: email, url: "mailto:bingxiliu35@gmail.com"}

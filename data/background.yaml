@@ -1,0 +1,5 @@
+# Image paths are relative to assets/. Focus coordinates are normalized from 0 to 1.
+image: images/tree-canopy.webp
+focus:
+  desktop: { x: 0.5, y: 0.5 }
+  mobile: { x: 0.64, y: 0.55 }

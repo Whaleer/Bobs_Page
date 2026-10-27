@@ -1,0 +1,10 @@
+# Generated output. Publish fresh builds rather than old committed HTML.
+/public/
+/resources/_gen/
+/.hugo_build.lock
+/hugo_stats.json
+/assets/jsconfig.json
+/node_modules/
+/coverage/
+/.netlify/
+.DS_Store
