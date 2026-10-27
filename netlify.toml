@@ -17,6 +17,7 @@
   from = "/posts/"
   to = "/blog/"
   status = 301
+  force = true
 
 [[headers]]
   for = "/fonts/*"
