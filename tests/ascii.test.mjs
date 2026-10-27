@@ -8,7 +8,48 @@ import {
   colorForTheme,
   motionMode,
   readabilityAt,
+  desktopWindAt,
 } from "../assets/js/ascii/model.ts";
+
+test("desktop wind is visible over a cycle and stays within gentle displacement and shade limits", () => {
+  for (const cellWidth of [8, 2560 / 240, 16]) {
+    const horizontal = [];
+    const vertical = [];
+    for (let step = 0; step <= 600; step++) {
+      const wind = desktopWindAt(step / 30, 480, 300, cellWidth);
+      assert.ok(Math.abs(wind.x) <= 8);
+      assert.ok(Math.abs(wind.y) <= 2);
+      assert.ok(wind.alpha >= 0.94 && wind.alpha <= 1);
+      horizontal.push(wind.x);
+      vertical.push(wind.y);
+    }
+    assert.ok(Math.max(...horizontal) - Math.min(...horizontal) > 5);
+    assert.ok(Math.max(...vertical) - Math.min(...vertical) > 1.5);
+  }
+});
+
+test("desktop wind changes smoothly over time and across neighboring leaf groups", () => {
+  for (const cellWidth of [8, 2560 / 240, 16]) {
+    for (const x of [0, 480, 1920])
+      for (const y of [0, 300, 900])
+        for (let time = 0; time < 16; time += 0.1) {
+          const current = desktopWindAt(time, x, y, cellWidth);
+          const next = desktopWindAt(time + 1 / 30, x, y, cellWidth);
+          assert.ok(Math.abs(next.x - current.x) < 0.35);
+          assert.ok(Math.abs(next.y - current.y) < 0.1);
+          assert.ok(Math.abs(next.alpha - current.alpha) < 0.001);
+          for (const [dx, dy] of [
+            [cellWidth * 8, 0],
+            [0, cellWidth * 1.65 * 4],
+          ]) {
+            const neighbor = desktopWindAt(time, x + dx, y + dy, cellWidth);
+            assert.ok(Math.abs(neighbor.x - current.x) < 2.5);
+            assert.ok(Math.abs(neighbor.y - current.y) < 0.8);
+            assert.ok(Math.abs(neighbor.alpha - current.alpha) < 0.01);
+          }
+        }
+  }
+});
 
 test("the reading mask fades continuously from the text into the image", () => {
   const boxes = [{ left: 100, top: 100, right: 300, bottom: 200 }];

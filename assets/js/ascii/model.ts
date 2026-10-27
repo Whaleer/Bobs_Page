@@ -45,6 +45,29 @@ export const GLYPHS = " .:-=+*#%@";
 export const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
+/** A continuous field keeps nearby leaf groups moving together, without random phases. */
+export function desktopWindAt(
+  time: number,
+  x: number,
+  y: number,
+  cellWidth: number,
+) {
+  const amplitude = clamp(cellWidth * 0.7, 5, 8);
+  const phaseX = x / 360;
+  const phaseY = y / 300;
+  return {
+    x:
+      amplitude *
+      (Math.sin(time * 0.92 + phaseY + phaseX * 0.45) * 0.74 +
+        Math.sin(time * 1.26 - phaseX * 0.8 + phaseY * 0.3) * 0.26),
+    y:
+      clamp(amplitude * 0.25, 1, 2) *
+      (Math.sin(time * 0.83 + phaseX * 0.75 - phaseY * 0.35) * 0.7 +
+        Math.sin(time * 1.17 + phaseY * 0.8) * 0.3),
+    alpha: 0.97 + Math.sin(time * 0.88 + phaseX * 0.7 + phaseY * 0.65) * 0.03,
+  };
+}
+
 export function readabilityAt(
   x: number,
   y: number,

@@ -1,6 +1,7 @@
 import {
   colorForTheme,
   coverCrop,
+  desktopWindAt,
   glyphForLuminance,
   readabilityAt,
   samplePixels,
@@ -17,6 +18,18 @@ interface Cell {
   alpha: number;
 }
 
+interface Tile {
+  x: number;
+  y: number;
+  sourceX: number;
+  sourceY: number;
+  width: number;
+  height: number;
+}
+
+const TILE_COLUMNS = 8;
+const TILE_ROWS = 4;
+
 export class AsciiRenderer {
   private context: CanvasRenderingContext2D;
   private cache = document.createElement("canvas");
@@ -31,6 +44,9 @@ export class AsciiRenderer {
   private cellHeight = 13.2;
   private samples: Sample[] = [];
   private cells: Cell[] = [];
+  private tiles: Tile[] = [];
+  private tileColumns = 0;
+  private tilePadding = 0;
   private image?: HTMLImageElement;
   private focus: Point = { x: 0.5, y: 0.5 };
   private isLight = false;
@@ -70,10 +86,9 @@ export class AsciiRenderer {
     this.cellWidth = width / this.columns;
     this.cellHeight = this.cellWidth * 1.65;
     this.rows = Math.ceil(height / this.cellHeight);
-    for (const surface of [this.context.canvas, this.cache]) {
-      surface.width = Math.round(width * ratio);
-      surface.height = Math.round(height * ratio);
-    }
+    this.context.canvas.width = Math.round(width * ratio);
+    this.context.canvas.height = Math.round(height * ratio);
+    this.prepareCache();
     this.resample();
   }
 
@@ -106,7 +121,12 @@ export class AsciiRenderer {
     if (!this.samples.length) return;
     const context = this.cache.getContext("2d")!;
     context.setTransform(this.ratio, 0, 0, this.ratio, 0, 0);
-    context.clearRect(0, 0, this.width, this.height);
+    context.clearRect(
+      0,
+      0,
+      this.cache.width / this.ratio,
+      this.cache.height / this.ratio,
+    );
     this.font(context);
     this.cells = this.samples.map((sample, index) => ({
       x: ((index % this.columns) + 0.5) * this.cellWidth,
@@ -115,7 +135,23 @@ export class AsciiRenderer {
       color: colorForTheme(sample, this.isLight),
       alpha: sample.alpha * (this.isLight ? 0.78 : 0.8),
     }));
-    for (const cell of this.cells) this.drawCell(context, cell, cell.x, cell.y);
+    for (const [index, cell] of this.cells.entries()) {
+      if (this.tiles.length) {
+        const row = Math.floor(index / this.columns);
+        const col = index % this.columns;
+        const tile =
+          this.tiles[
+            Math.floor(row / TILE_ROWS) * this.tileColumns +
+              Math.floor(col / TILE_COLUMNS)
+          ];
+        this.drawCell(
+          context,
+          cell,
+          tile.sourceX / this.ratio + this.tilePadding + cell.x - tile.x,
+          tile.sourceY / this.ratio + this.tilePadding + cell.y - tile.y,
+        );
+      } else this.drawCell(context, cell, cell.x, cell.y);
+    }
     context.globalAlpha = 1;
   }
 
@@ -125,7 +161,30 @@ export class AsciiRenderer {
     context.setTransform(this.ratio, 0, 0, this.ratio, 0, 0);
     context.clearRect(0, 0, this.width, this.height);
     context.globalAlpha = 1;
-    if (animate) {
+    if (this.tiles.length) {
+      for (const tile of this.tiles) {
+        const wind = animate
+          ? desktopWindAt(
+              time,
+              tile.x + (this.cellWidth * TILE_COLUMNS) / 2,
+              tile.y + (this.cellHeight * TILE_ROWS) / 2,
+              this.cellWidth,
+            )
+          : { x: 0, y: 0, alpha: 1 };
+        context.globalAlpha = wind.alpha;
+        context.drawImage(
+          this.cache,
+          tile.sourceX,
+          tile.sourceY,
+          tile.width,
+          tile.height,
+          tile.x - this.tilePadding + wind.x,
+          tile.y - this.tilePadding + wind.y,
+          tile.width / this.ratio,
+          tile.height / this.ratio,
+        );
+      }
+    } else if (animate) {
       // Each band contains complete glyph rows; wind never resamples or changes the characters.
       const bandHeight = this.cellHeight * 2;
       for (let y = 0, band = 0; y < this.height; y += bandHeight, band++) {
@@ -148,6 +207,41 @@ export class AsciiRenderer {
     context.globalCompositeOperation = "destination-in";
     context.drawImage(this.mask, 0, 0, this.width, this.height);
     context.globalCompositeOperation = "source-over";
+  }
+
+  private prepareCache() {
+    this.tiles = [];
+    if (this.width < 1024) {
+      this.cache.width = Math.round(this.width * this.ratio);
+      this.cache.height = Math.round(this.height * this.ratio);
+      return;
+    }
+    this.tileColumns = Math.ceil(this.columns / TILE_COLUMNS);
+    const tileRows = Math.ceil(this.rows / TILE_ROWS);
+    const padding = Math.ceil(2 * this.ratio);
+    this.tilePadding = padding / this.ratio;
+    const slotWidth =
+      Math.ceil(this.cellWidth * TILE_COLUMNS * this.ratio) + padding * 2;
+    const slotHeight =
+      Math.ceil(this.cellHeight * TILE_ROWS * this.ratio) + padding * 2;
+    this.cache.width = this.tileColumns * slotWidth;
+    this.cache.height = tileRows * slotHeight;
+    // Each atlas slot contains only its own complete glyphs. Transparent gutters
+    // keep moving tiles from clipping letters or duplicating a neighbor's pixels.
+    for (let row = 0; row < tileRows; row++)
+      for (let col = 0; col < this.tileColumns; col++)
+        this.tiles.push({
+          x:
+            Math.floor(col * this.cellWidth * TILE_COLUMNS * this.ratio) /
+            this.ratio,
+          y:
+            Math.floor(row * this.cellHeight * TILE_ROWS * this.ratio) /
+            this.ratio,
+          sourceX: col * slotWidth,
+          sourceY: row * slotHeight,
+          width: slotWidth,
+          height: slotHeight,
+        });
   }
 
   private resample() {
