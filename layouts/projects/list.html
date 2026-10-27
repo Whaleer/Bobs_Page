@@ -1,0 +1,7 @@
+{{ define "main" }}
+{{ if .RegularPages }}
+<main id="main-content" class="projects-main"><div class="project-strip" data-project-strip aria-label="Selected projects" tabindex="0">
+{{ range .RegularPages.ByWeight }}{{ $project := . }}<a class="project-card" href="{{ .RelPermalink }}"><div class="project-cover">{{ with .Params.cover }}<img src="{{ partial `image-url.html` (dict `page` $project `src` .) }}" alt="{{ $project.Title }}" loading="lazy">{{ else }}<span>{{ .Title }}</span>{{ end }}<span class="project-visit">view project ↗</span></div><div class="project-caption"><h2>{{ .Title }}</h2><span>{{ .Params.year | default (.Date.Format "2006") }}</span></div><p>{{ .Summary | plainify | truncate 180 }}</p></a>{{ end }}
+</div></main>
+{{ else }}<main id="main-content" class="empty-page"><p>coming soon.<span class="terminal-cursor" aria-hidden="true"></span></p></main>{{ end }}
+{{ end }}

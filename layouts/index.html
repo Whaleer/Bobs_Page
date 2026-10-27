@@ -1,0 +1,14 @@
+{{ define "main" }}
+<canvas class="pond-canvas" id="pond" aria-hidden="true"></canvas>
+<div class="pond-stats" data-pond-avoid aria-hidden="true"><span data-koi-count></span><span data-food-count></span></div>
+<main id="main-content" class="pond-main">
+  <header class="hero-copy" data-pond-avoid>
+    <p class="hero-quote">{{ hugo.Data.profile.tagline }}<span class="terminal-cursor" aria-hidden="true"></span></p>
+    <div class="hero-intro">
+      <h1>{{ hugo.Data.profile.greeting }}</h1>
+      {{ range hugo.Data.profile.intro }}<p>{{ . | markdownify }}</p>{{ end }}
+      <p class="social-links">{{ range $i, $social := hugo.Data.profile.socials }}{{ if $i }}<span aria-hidden="true"> / </span>{{ end }}<a href="{{ .url | safeURL }}"{{ if hasPrefix .url "https://" }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .label }}</a>{{ end }}</p>
+    </div>
+  </header>
+</main>
+{{ end }}

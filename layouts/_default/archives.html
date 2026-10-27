@@ -1,0 +1,7 @@
+{{ define "main" }}
+<main id="main-content" class="content-width blog-main">
+  <a class="back-link" href="{{ `blog/` | relURL }}">← back to blog</a>
+  <header class="page-heading"><h1>Archive</h1></header>
+  {{ range (where site.RegularPages "Section" "posts").GroupByDate "2006" }}<section class="post-year"><h2>{{ .Key }}</h2><div class="post-list">{{ range .Pages.ByDate.Reverse }}<a class="post-row" href="{{ .RelPermalink }}"><time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format "Jan 02" }}</time><h3>{{ .Title }}</h3><span class="post-arrow" aria-hidden="true">↗</span></a>{{ end }}</div></section>{{ end }}
+</main>
+{{ end }}

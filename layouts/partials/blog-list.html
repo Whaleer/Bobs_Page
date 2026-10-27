@@ -1,0 +1,15 @@
+<main id="main-content" class="content-width blog-main">
+  <header class="page-heading">
+    <div><p class="eyebrow">notes & observations</p><h1>Blog</h1></div>
+    <a class="icon-button search-link" href="{{ `search/` | relURL }}" aria-label="Search articles">{{ partial "icon.html" "search" }}</a>
+  </header>
+  <div class="blog-tools"><a href="{{ `archives/` | relURL }}">archive</a><a href="{{ `tags/` | relURL }}">tags</a><a href="{{ `index.xml` | relURL }}">rss ↗</a></div>
+  {{ $posts := where site.RegularPages "Section" "posts" }}
+  {{ range $posts.GroupByDate "2006" }}
+    <section class="post-year" aria-labelledby="year-{{ .Key }}"><h2 id="year-{{ .Key }}">{{ .Key }}</h2>
+      <div class="post-list">{{ range .Pages.ByDate.Reverse }}
+        <a class="post-row" href="{{ .RelPermalink }}"><time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format "Jan 02" }}</time><div><h3>{{ .Title }}</h3>{{ with .Params.tags }}<p class="post-tags">{{ delimit . " · " }}</p>{{ end }}</div><span class="post-arrow" aria-hidden="true">↗</span></a>
+      {{ end }}</div>
+    </section>
+  {{ end }}
+</main>

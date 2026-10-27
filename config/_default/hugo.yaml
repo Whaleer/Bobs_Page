@@ -1,0 +1,40 @@
+baseURL: https://bobliu.cc/
+title: Bob Liu
+locale: en-US
+defaultContentLanguage: en
+enableRobotsTXT: true
+enableEmoji: true
+summaryLength: 32
+pagination:
+  pagerSize: 20
+outputs:
+  home: [HTML, RSS, JSON]
+taxonomies:
+  tag: tags
+  category: categories
+params:
+  description: "Bob Liu — exploring computer vision, embedded systems, and backend development."
+  author: Bob Liu
+  mainSections: [posts]
+menu:
+  main:
+    - {name: pond, url: /, weight: 10}
+    - {name: projects, url: /projects/, weight: 20}
+    - {name: gallery, url: /gallery/, weight: 30}
+    - {name: blog, url: /blog/, weight: 40}
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    codeFences: true
+    guessSyntax: false
+    noClasses: false
+    lineNos: false
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
+    ordered: false
+imaging:
+  quality: 85
+  resampleFilter: Lanczos

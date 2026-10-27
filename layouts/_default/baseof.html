@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="{{ if eq .Section `posts` }}zh-CN{{ else }}{{ .Language.Locale | default `en-US` }}{{ end }}" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+  {{ $description := .Description | default (.Summary | plainify | truncate 160) | default site.Params.description }}
+  <meta name="description" content="{{ $description }}">
+  <meta name="author" content="{{ site.Params.author }}">
+  {{ $canonical := .Permalink }}
+  {{ if and (eq .Kind "section") (eq .Section "posts") }}{{ $canonical = "blog/" | absURL }}{{ end }}
+  <link rel="canonical" href="{{ $canonical }}">
+  <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }}{{ end }}">
+  <meta property="og:description" content="{{ $description }}">
+  <meta property="og:type" content="{{ if and .IsPage (eq .Section `posts`) }}article{{ else }}website{{ end }}">
+  <meta property="og:url" content="{{ $canonical }}">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="{{ `favicon.ico` | relURL }}" sizes="any">
+  <link rel="apple-touch-icon" href="{{ `apple-touch-icon.png` | relURL }}">
+  <link rel="preload" href="{{ `fonts/geist-mono.woff2` | relURL }}" as="font" type="font/woff2" crossorigin>
+  {{ with site.Home.OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .Permalink }}">{{ end }}
+  <script>try{var t=localStorage.getItem('pref-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+  {{ $css := resources.Get "css/site.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+  {{ $js := resources.Get "js/site.ts" | js.Build (dict "target" "es2020" "minify" hugo.IsProduction) | fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+  {{ if .IsHome }}
+    {{ $pond := resources.Get "js/pond/index.ts" | js.Build (dict "target" "es2020" "minify" hugo.IsProduction) | fingerprint }}
+    <script src="{{ $pond.RelPermalink }}" integrity="{{ $pond.Data.Integrity }}" defer></script>
+  {{ end }}
+</head>
+<body class="{{ if .IsHome }}is-pond{{ else }}is-{{ .Section | default .Type }}{{ end }}">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  {{ partial "nav.html" . }}
+  {{ block "main" . }}{{ end }}
+  {{ if not (or .IsHome (in (slice "projects" "gallery") .Section)) }}{{ partial "footer.html" . }}{{ end }}
+</body>
+</html>

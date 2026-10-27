@@ -1,0 +1,9 @@
+# Add your own work here. Paths are relative to static/ (for example /gallery/photo.webp).
+# - title: Mountain light
+#   image: /gallery/mountain.webp
+#   year: "2026"
+#   description: A short caption.
+#   width: 1600
+#   height: 1200
+#   order: 1
+works: []

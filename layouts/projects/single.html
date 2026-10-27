@@ -1,0 +1,6 @@
+{{ define "main" }}
+<main id="main-content" class="article-width article-main project-detail">
+  <a class="back-link" href="{{ `projects/` | relURL }}">← back to projects</a>
+  <article><header class="article-header"><p class="eyebrow">{{ .Params.year | default (.Date.Format "2006") }}</p><h1>{{ .Title }}</h1>{{ with .Params.summary }}<p class="project-summary">{{ . }}</p>{{ end }}{{ with .Params.link }}<a class="text-link" href="{{ . | safeURL }}" target="_blank" rel="noopener noreferrer">visit project ↗</a>{{ end }}</header><div class="prose">{{ .Content }}</div></article>
+</main>
+{{ end }}

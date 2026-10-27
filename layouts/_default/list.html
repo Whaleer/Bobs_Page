@@ -1,0 +1,10 @@
+{{ define "main" }}
+<main id="main-content" class="content-width blog-main">
+  <a class="back-link" href="{{ `blog/` | relURL }}">← back to blog</a>
+  <header class="page-heading"><h1>{{ .Title }}</h1></header>
+  {{ if in (slice "taxonomy" "term") .Kind }}
+    {{ if eq .Kind "taxonomy" }}<div class="tag-cloud">{{ range .Data.Terms.Alphabetical }}<a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}<span>{{ .Count }}</span></a>{{ end }}</div>
+    {{ else }}<div class="post-list">{{ range .Pages.ByDate.Reverse }}<a class="post-row" href="{{ .RelPermalink }}"><time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format "Jan 02" }}</time><h2>{{ .Title }}</h2><span class="post-arrow" aria-hidden="true">↗</span></a>{{ end }}</div>{{ end }}
+  {{ else }}<div class="prose">{{ .Content }}</div>{{ end }}
+</main>
+{{ end }}

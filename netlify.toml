@@ -1,0 +1,30 @@
+[build]
+  command = "hugo --gc --minify --cleanDestinationDir"
+  publish = "public"
+
+[build.environment]
+  HUGO_VERSION = "0.161.1"
+  HUGO_ENVIRONMENT = "production"
+  NODE_VERSION = "24"
+
+[context.deploy-preview]
+  command = "hugo --gc --minify --cleanDestinationDir --baseURL \"$DEPLOY_PRIME_URL/\""
+
+[context.branch-deploy]
+  command = "hugo --gc --minify --cleanDestinationDir --baseURL \"$DEPLOY_PRIME_URL/\""
+
+[[redirects]]
+  from = "/posts/"
+  to = "/blog/"
+  status = 301
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
