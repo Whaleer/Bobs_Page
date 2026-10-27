@@ -228,8 +228,9 @@ dialog::backdrop {
   pointer-events: auto;
 }
 .hero-quote {
+  --enter-opacity: 0.6;
   margin: 0 0 40px;
-  opacity: 0.55;
+  opacity: 0.6;
   font-size: 14px;
   letter-spacing: 0.02em;
   animation: enter 0.6s both;
@@ -271,11 +272,19 @@ dialog::backdrop {
 }
 .hero-intro .social-links {
   margin-top: 25px;
-  color: var(--muted);
+  color: inherit;
   font-size: 14px;
 }
+.hero-intro .social-links a {
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+.hero-intro .social-links a:hover,
+.hero-intro .social-links a:focus-visible {
+  opacity: 1;
+}
 .social-links > span {
-  opacity: 0.5;
+  opacity: 0.4;
 }
 .content-width {
   width: calc(100% - 48px);
@@ -1025,7 +1034,7 @@ html:has(dialog[open]) {
     transform: translateY(8px);
   }
   to {
-    opacity: 1;
+    opacity: var(--enter-opacity, 1);
     transform: none;
   }
 }
@@ -1400,7 +1409,7 @@ html:has(dialog[open]) {
     transition: none !important;
   }
   .hero-quote {
-    opacity: 0.55;
+    opacity: 0.6;
   }
   .hero-intro {
     opacity: 1;
