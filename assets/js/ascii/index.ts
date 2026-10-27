@@ -1,10 +1,4 @@
-import {
-  clamp,
-  motionMode,
-  type Point,
-  type Pointer,
-  type Rect,
-} from "./model.ts";
+import { clamp, motionMode, type Point, type Rect } from "./model.ts";
 import { AsciiRenderer } from "./renderer.ts";
 
 const canvas = document.querySelector<HTMLCanvasElement>("#ascii-background");
@@ -20,8 +14,6 @@ function startBackground(canvas: HTMLCanvasElement) {
   const renderer = new AsciiRenderer(canvas);
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   const image = new Image();
-  const pointer: Pointer = { x: 0, y: 0, strength: 0 };
-  const target = { x: 0, y: 0, active: false };
   const dialogs = Array.from(
     document.querySelectorAll<HTMLDialogElement>("dialog"),
   );
@@ -69,7 +61,7 @@ function startBackground(canvas: HTMLCanvasElement) {
   };
 
   const drawStill = () => {
-    if (ready) renderer.render(0, { x: 0, y: 0, strength: 0 }, false);
+    if (ready) renderer.render(0, false);
   };
   const animate = (now: number) => {
     frame = requestAnimationFrame(animate);
@@ -78,11 +70,7 @@ function startBackground(canvas: HTMLCanvasElement) {
     const dt = Math.min(milliseconds / 1000, 0.08);
     last = now - (milliseconds % (1000 / 30));
     elapsed += dt;
-    const ease = 1 - Math.exp(-dt / 0.15);
-    pointer.x += (target.x - pointer.x) * ease;
-    pointer.y += (target.y - pointer.y) * ease;
-    pointer.strength += ((target.active ? 1 : 0) - pointer.strength) * ease;
-    renderer.render(elapsed, pointer, true);
+    renderer.render(elapsed, true);
   };
 
   const schedule = () => {
@@ -111,8 +99,7 @@ function startBackground(canvas: HTMLCanvasElement) {
     if (destroyed || !rect.width || !rect.height) return;
     renderer.resize(rect.width, rect.height, focus());
     measure();
-    if (ready)
-      renderer.render(reduced.matches ? 0 : elapsed, pointer, !reduced.matches);
+    if (ready) renderer.render(reduced.matches ? 0 : elapsed, !reduced.matches);
   };
   const resizeObserver = new ResizeObserver(() => {
     cancelAnimationFrame(resizeFrame);
@@ -127,10 +114,7 @@ function startBackground(canvas: HTMLCanvasElement) {
     schedule();
   });
   visibilityObserver.observe(canvas);
-  const dialogObserver = new MutationObserver(() => {
-    target.active = false;
-    schedule();
-  });
+  const dialogObserver = new MutationObserver(schedule);
   for (const dialog of dialogs)
     dialogObserver.observe(dialog, {
       attributes: true,
@@ -139,22 +123,7 @@ function startBackground(canvas: HTMLCanvasElement) {
 
   const theme = () => {
     renderer.setTheme(document.documentElement.dataset.theme === "light");
-    if (ready)
-      renderer.render(reduced.matches ? 0 : elapsed, pointer, !reduced.matches);
-  };
-  const move = (event: PointerEvent) => {
-    if (reduced.matches || event.pointerType === "touch") return;
-    const rect = canvas.getBoundingClientRect();
-    target.x = event.clientX - rect.left;
-    target.y = event.clientY - rect.top;
-    if (!target.active && pointer.strength < 0.01) {
-      pointer.x = target.x;
-      pointer.y = target.y;
-    }
-    target.active = true;
-  };
-  const leave = () => {
-    target.active = false;
+    if (ready) renderer.render(reduced.matches ? 0 : elapsed, !reduced.matches);
   };
   const hide = (event: PageTransitionEvent) => {
     pageActive = false;
@@ -165,12 +134,9 @@ function startBackground(canvas: HTMLCanvasElement) {
     resizeObserver.disconnect();
     visibilityObserver.disconnect();
     dialogObserver.disconnect();
-    window.removeEventListener("pointermove", move);
-    window.removeEventListener("blur", leave);
     window.removeEventListener("site:theme", theme);
     window.removeEventListener("pageshow", show);
     window.removeEventListener("pagehide", hide);
-    document.documentElement.removeEventListener("pointerleave", leave);
     document.removeEventListener("visibilitychange", schedule);
     reduced.removeEventListener("change", schedule);
     image.onload = image.onerror = null;
@@ -180,12 +146,9 @@ function startBackground(canvas: HTMLCanvasElement) {
     resize();
     schedule();
   };
-  window.addEventListener("pointermove", move, { passive: true });
-  window.addEventListener("blur", leave);
   window.addEventListener("site:theme", theme);
   window.addEventListener("pagehide", hide);
   window.addEventListener("pageshow", show);
-  document.documentElement.addEventListener("pointerleave", leave);
   document.addEventListener("visibilitychange", schedule);
   reduced.addEventListener("change", schedule);
 
@@ -216,11 +179,7 @@ function startBackground(canvas: HTMLCanvasElement) {
       renderer.refreshFont();
       measure();
       if (ready)
-        renderer.render(
-          reduced.matches ? 0 : elapsed,
-          pointer,
-          !reduced.matches,
-        );
+        renderer.render(reduced.matches ? 0 : elapsed, !reduced.matches);
     }
   });
   theme();

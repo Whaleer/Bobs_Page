@@ -2,11 +2,9 @@ import {
   colorForTheme,
   coverCrop,
   glyphForLuminance,
-  pointerDisplacement,
   readabilityAt,
   samplePixels,
   type Point,
-  type Pointer,
   type Rect,
   type Sample,
 } from "./model.ts";
@@ -121,7 +119,7 @@ export class AsciiRenderer {
     context.globalAlpha = 1;
   }
 
-  render(time: number, pointer: Pointer, animate: boolean) {
+  render(time: number, animate: boolean) {
     if (!this.cells.length) return;
     const context = this.context;
     context.setTransform(this.ratio, 0, 0, this.ratio, 0, 0);
@@ -146,7 +144,6 @@ export class AsciiRenderer {
       }
     } else context.drawImage(this.cache, 0, 0, this.width, this.height);
 
-    if (animate && pointer.strength > 0.005) this.drawPointer(time, pointer);
     context.globalAlpha = 1;
     context.globalCompositeOperation = "destination-in";
     context.drawImage(this.mask, 0, 0, this.width, this.height);
@@ -186,51 +183,6 @@ export class AsciiRenderer {
       this.rows,
     );
     this.refreshFont();
-  }
-
-  private drawPointer(time: number, pointer: Pointer) {
-    const context = this.context;
-    const radius = 136;
-    context.save();
-    context.beginPath();
-    context.arc(pointer.x, pointer.y, radius, 0, Math.PI * 2);
-    context.clip();
-    context.clearRect(
-      pointer.x - radius,
-      pointer.y - radius,
-      radius * 2,
-      radius * 2,
-    );
-    this.font(context);
-    const left = Math.max(
-      0,
-      Math.floor((pointer.x - radius) / this.cellWidth) - 1,
-    );
-    const right = Math.min(
-      this.columns - 1,
-      Math.ceil((pointer.x + radius) / this.cellWidth) + 1,
-    );
-    const top = Math.max(
-      0,
-      Math.floor((pointer.y - radius) / this.cellHeight) - 1,
-    );
-    const bottom = Math.min(
-      this.rows - 1,
-      Math.ceil((pointer.y + radius) / this.cellHeight) + 1,
-    );
-    for (let row = top; row <= bottom; row++)
-      for (let col = left; col <= right; col++) {
-        const cell = this.cells[row * this.columns + col];
-        const wind = this.wind(time, Math.floor(row / 2));
-        const offset = pointerDisplacement(cell.x + wind, cell.y, pointer);
-        this.drawCell(
-          context,
-          cell,
-          cell.x + wind + offset.x,
-          cell.y + offset.y,
-        );
-      }
-    context.restore();
   }
 
   private wind(time: number, band: number) {

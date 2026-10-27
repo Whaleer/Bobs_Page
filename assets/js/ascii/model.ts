@@ -21,9 +21,6 @@ export interface Sample {
   alpha: number;
   luminance: number;
 }
-export interface Pointer extends Point {
-  strength: number;
-}
 
 export function motionMode(state: {
   ready: boolean;
@@ -137,20 +134,4 @@ export function samplePixels(
 export function colorForTheme(sample: Sample, isLight: boolean) {
   const factor = isLight ? 0.82 : 1;
   return `rgb(${Math.round(sample.red * factor)},${Math.round(sample.green * factor)},${Math.round(sample.blue * factor)})`;
-}
-
-export function pointerDisplacement(
-  x: number,
-  y: number,
-  pointer: Pointer,
-  radius = 120,
-): Point {
-  const dx = x - pointer.x;
-  const dy = y - pointer.y;
-  const distance = Math.hypot(dx, dy);
-  if (distance < 0.001 || distance >= radius || pointer.strength <= 0)
-    return { x: 0, y: 0 };
-  const t = 1 - distance / radius;
-  const amount = t * t * (3 - 2 * t) * clamp(pointer.strength, 0, 1) * 12;
-  return { x: (dx / distance) * amount, y: (dy / distance) * amount };
 }

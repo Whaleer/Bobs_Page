@@ -5,7 +5,6 @@ import {
   coverCrop,
   glyphForLuminance,
   samplePixels,
-  pointerDisplacement,
   colorForTheme,
   motionMode,
   readabilityAt,
@@ -104,19 +103,4 @@ test("RGBA sampling preserves per-cell color and alpha in row-major order", () =
     colorForTheme(samples[0], false),
   );
   assert.throws(() => samplePixels([255, 255], 1, 1), RangeError);
-});
-
-test("pointer disturbance is local, bounded, and settles continuously to zero", () => {
-  const pointer = { x: 200, y: 200, strength: 1 };
-  assert.deepEqual(pointerDisplacement(320, 200, pointer), { x: 0, y: 0 });
-  assert.deepEqual(pointerDisplacement(200, 200, pointer), { x: 0, y: 0 });
-  const near = pointerDisplacement(220, 200, pointer);
-  const far = pointerDisplacement(300, 200, pointer);
-  assert.ok(near.x > far.x && near.x <= 12 && near.y === 0);
-  const fading = pointerDisplacement(220, 200, { ...pointer, strength: 0.1 });
-  assert.ok(fading.x < near.x);
-  assert.deepEqual(pointerDisplacement(220, 200, { ...pointer, strength: 0 }), {
-    x: 0,
-    y: 0,
-  });
 });
