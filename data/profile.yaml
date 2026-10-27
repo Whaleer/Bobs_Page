@@ -2,7 +2,7 @@ name: Bob Liu
 greeting: "Hi, I'm Bob."
 tagline: "diving…"
 intro:
-  - "I am just an ordinary coder.🎧“
+  - "I am just an ordinary coder.🎧"
 socials:
   - {label: github, url: "https://github.com/Whaleer/"}
   - {label: X, url: "https://x.com/Bob_Lliu"}
