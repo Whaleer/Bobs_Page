@@ -58,7 +58,7 @@ description: 用于搜索引擎和分享的简短说明。
 
 ## 添加项目
 
-首版 Projects 和 Gallery 都为空，页面显示 `coming soon.`。添加已发布的内容后会自动使用完整展示布局。
+Projects 已展示 Swell 和 neiro，项目内容与压缩封面分别保存在 `content/projects/swell/` 和 `content/projects/neiro/`。Gallery 仍为空，显示 `coming soon.`。
 
 ```sh
 hugo new content projects/my-project/index.md
@@ -83,7 +83,9 @@ weight: 10
 Write the project story here.
 ```
 
-把封面放在同一目录。`cover` 支持页面内图片或 `/` 开头的静态资源路径。`weight` 越小排序越靠前。项目在桌面横向滚动，在手机纵向排列，点击进入 Markdown 详情页。
+把封面放在同一目录。`cover` 支持页面内图片或 `/` 开头的静态资源路径；建议使用不超过 1400px 宽、300 KiB 的 WebP。`weight` 越小排序越靠前。项目在桌面横向滚动，在手机纵向排列。填写 `link` 后卡片直接打开该地址，HTTPS 外链在新标签页打开；GitHub 链接显示 `view on GitHub ↗`。留空 `link` 时，卡片进入 Markdown 详情页。
+
+Swell 封面取自其公开仓库中的 `assets/blue-fullscreen.jpg`；neiro 封面截取自本地运行的默认训练界面（英文）。两张封面随网站发布，不依赖外站图片加载。
 
 ## 添加画廊作品
 

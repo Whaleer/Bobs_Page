@@ -41,6 +41,12 @@ function files(dir) {
       : [join(dir, entry.name)],
   );
 }
+function attribute(html, name) {
+  const match = html.match(
+    new RegExp(`\\b${name}=(?:"([^"]+)"|'([^']+)'|([^\\s>]+))`),
+  );
+  return match ? match[1] || match[2] || match[3] : undefined;
+}
 
 try {
   build();
@@ -78,7 +84,52 @@ try {
         entry.content &&
         !entry.content.startsWith("[[]]"),
     );
-  assert.match(text("projects/index.html"), /coming soon\./);
+  const projects = text("projects/index.html");
+  const cards =
+    projects.match(/<a class=project-card\b[^>]*>[\s\S]*?<\/a>/g) || [];
+  assert.equal(cards.length, 2, "Show exactly the two published projects");
+  const expectedProjects = [
+    {
+      title: "Swell",
+      slug: "swell",
+      url: "https://github.com/Whaleer/Swell",
+      summary:
+        "A macOS app for full-screen digital art, clocks, and personal media.",
+    },
+    {
+      title: "neiro",
+      slug: "neiro",
+      url: "https://github.com/Whaleer/neiro",
+      summary:
+        "An interactive guitar fretboard trainer for learning notes through visual and auditory practice.",
+    },
+  ];
+  for (const [index, project] of expectedProjects.entries()) {
+    const card = cards[index];
+    assert.ok(card.includes(`<h2>${project.title}</h2>`), "Keep project order");
+    assert.ok(card.includes(project.summary));
+    assert.ok(card.includes("<span>2026</span>"));
+    assert.ok(card.includes("view on GitHub ↗"));
+    assert.equal(attribute(card, "href"), project.url);
+    assert.equal(attribute(card, "target"), "_blank");
+    assert.equal(attribute(card, "rel"), "noopener noreferrer");
+    const image = card.match(/<img\b[^>]*>/)?.[0];
+    assert.ok(image, `${project.title} needs a cover`);
+    const cover = attribute(image, "src");
+    assert.equal(cover, `/projects/${project.slug}/cover.webp`);
+    assert.equal(attribute(image, "alt"), project.title);
+    const file = join(output, cover);
+    assert.ok(
+      existsSync(file),
+      `${project.title} cover must be published locally`,
+    );
+    assert.ok(
+      statSync(file).size <= 300 * 1024,
+      "Keep project covers lightweight",
+    );
+    assert.equal(readFileSync(file).toString("ascii", 8, 12), "WEBP");
+  }
+  assert.ok(!projects.includes("coming soon."));
   assert.match(text("gallery/index.html"), /coming soon\./);
   const home = text("index.html");
   assert.match(home, /id=ascii-background/);
@@ -185,6 +236,14 @@ try {
     text("projects/test-project/index.html"),
     /A real content template/,
   );
+  const internalCard = (
+    text("projects/index.html").match(
+      /<a class=project-card\b[^>]*>[\s\S]*?<\/a>/g,
+    ) || []
+  ).find((card) => card.includes("<h2>Test project</h2>"));
+  assert.ok(internalCard, "Projects without an external link remain supported");
+  assert.equal(attribute(internalCard, "href"), "/projects/test-project/");
+  assert.equal(attribute(internalCard, "target"), undefined);
   assert.match(text("gallery/index.html"), /gallery-lightbox/);
   assert.equal(
     (text("gallery/index.html").match(/data-gallery-open/g) || []).length,
